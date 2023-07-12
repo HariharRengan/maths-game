@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Game</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css">
+  <style>
+    .container {
+      margin-top: 100px;
+    }
+  </style>
+  <script>
+    function setFocus() {
+      document.getElementById("answer").focus();
+    }
+  </script>
+</head>
+<body onload="setFocus()">
+  <div style='display: none;' id='clr'>{{ session['clr'] }}</div>
+  <div style="position: absolute; top: 5px; left: 5px;" id="score">Score: </div>
+  <div style="position: absolute; top: 5px; left: 95vw;" id="bingbong1"></div>
+  <div class="container">
+    <h1 class="text-center">{{ equation }}</h1>
+    <form id="answer-form">
+      <div class="mb-3">
+        <label for="answer" class="form-label">Answer:</label>
+        <input type="number" class="form-control" id="answer" name="answer" required>
+      </div>
+      <button type="submit" id='bing' class="btn btn-primary">Submit</button>
+      <button class="btn btn-secondary" onclick="window.location.reload()">Skip</button>
+    </form>
+  </div>
+  <script>
+    function startTimer(duration) {
+      let timer = duration;
+      let minutes, seconds;
+
+      const timerInterval = setInterval(function () {
+        minutes = Math.floor(timer / 60);
+        seconds = timer % 60;
+
+        minutes = minutes < 10 ? "0" + minutes : minutes;
+        seconds = seconds < 10 ? "0" + seconds : seconds;
+
+        document.getElementById("bingbong1").textContent = minutes + ":" + seconds;
+
+        if (--timer < 0) {
+          clearInterval(timerInterval);
+          document.getElementById("bingbong1").textContent = "Complete";
+          window.location.href = 'scoring'
+        }
+      }, 1000);
+    }
+
+    // Usage: Start a timer for 5 minutes (300 seconds)
+    startTimer(parseInt('{{t}}'));
+  </script>
+  <script>
+    var score = localStorage.getItem('score') || 0;
+    var quest = localStorage.getItem('quest') || 0;
+    document.getElementById('score').innerHTML += score
+    function checkE(string1, string2) {
+  const number1 = parseFloat(string1);
+  const number2 = parseFloat(string2);
+  
+  return Math.abs(number1 - number2) < 0.00000000000000000000000000000000000001;
+}
+
+    console.log('{{answer}}')
+    document.getElementById('bing').addEventListener('click', function(event) {
+      event.preventDefault();
+
+      var userAnswer = document.getElementById('answer').value;
+      var correctAnswer = '{{ answer }}';
+      quest++;
+      console.log(correctAnswer)
+      console.log(userAnswer)
+      if (checkE(userAnswer, correctAnswer)) {
+        score++;
+        localStorage.setItem('score', score);
+        window.location.reload()
+      }
+    });
+  </script>
+  <script>
+    function toggleDarkMode() {
+      var clr = document.getElementById('clr').textContent
+      var body = document.body;
+      console.log(clr)
+      console.log(clr == 1)
+      if (parseInt(clr) == 1) {
+        // Switch to dark mode
+        body.style.backgroundColor = '#000000';
+        body.style.color = '#ffffff';
+        document.getElementById('navbar-bing').setAttribute('data-bs-theme', 'dark');
+      }
+    }
+    toggleDarkMode();
+  </script>
+</body>
+</html>

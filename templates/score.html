@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css">
+    <title>Score</title>
+    <style>
+        body {
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+        }
+        #bing {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+        }
+  body {
+    font-family: Arial, sans-serif;
+  }
+  .heading {
+    text-align: center;
+    font-size: 36px;
+    margin-top: 50px;
+  }
+  #bing {
+    text-align: center;
+    font-size: 48px;
+    margin-top: 20px;
+  }
+  .animate-number {
+    animation: bounce 1s infinite;
+  }
+  .animate-fade {
+    animation: fade 2s infinite;
+  }
+  @keyframes bounce {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.2); }
+    100% { transform: scale(1); }
+  }
+  @keyframes fade {
+    0% { opacity: 0; }
+    50% { opacity: 1; }
+    100% { opacity: 0; }
+  }
+</style>
+</head>
+<body>
+  <div style='display: none;' id='clr'>{{ session['clr'] }}</div>
+  <nav class="navbar navbar-expand-lg bg-body-tertiary" id="navbar-bing">
+    <div class="container-fluid">
+      <a class="navbar-brand" href="/">Math game</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+          <li class="nav-item">
+            <a class="nav-link active" aria-current="page" href="/climbs">Climbs</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link active" aria-current="page" href="/practice">Fractions</a>
+          </li>
+        </ul>
+        <li class="nav-item d-flex">
+          <a class="nav-link active" aria-current="page" href="/change-theme">Change theme</a>
+        </li>
+      </div>
+    </div>
+  </nav>
+  <br>
+<h1 class="heading animate-fade">Great Job!</h1>
+<div id="bing" class="animate-number"></div>
+    <script>
+        var score = localStorage.getItem('score');
+        localStorage.setItem('score', 0) || 0;
+        document.getElementById('bing').innerHTML += '<h1>'+score+'</h1>'
+        // var bingbong = localStorage.getItem('quest') - score || 0;
+        // localStorage.setItem('quest', 0);
+        // document.getElementById('bing1').innerHTML += '<h1>'+bingbong+'</h1>'
+        // b = '<h1>'+100*score/(score + bingbong)+'</h1>'
+        // if (b == NaN) {
+        // document.getElementById('bing2').innerHTML += '<h1>0%</h1>'
+    //}
+    // else {
+    //     document.getElementById('bing2').innerHTML += '<h1>' + bingbong + '%</h1>'
+    //}
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.min.js" integrity="sha384-fbbOQedDUMZZ5KreZpsbe1LCZPVmfTnH7ois6mU1QK+m14rQ1l2bGBq41eYeM/fS" crossorigin="anonymous"></script>
+    <script>
+      function toggleDarkMode() {
+        var clr = document.getElementById('clr').textContent
+        var body = document.body;
+        console.log(clr)
+        console.log(clr == 1)
+        if (parseInt(clr) == 1) {
+          // Switch to dark mode
+          body.style.backgroundColor = '#000000';
+          body.style.color = '#ffffff';
+          document.getElementById('navbar-bing').setAttribute('data-bs-theme', 'dark');
+        }
+      }
+      toggleDarkMode();
+    </script>
+  </body>
+</html>

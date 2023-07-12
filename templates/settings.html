@@ -1,0 +1,384 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Math Game Settings</title>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css">
+  <style>
+    .disabled {
+      opacity: 0.5;
+      pointer-events: none;    
+    }
+    body {
+      padding-bottom: 10px;;
+    }
+  </style>
+</head>
+<body>
+  <div style='display: none;' id='clr'>{{ session['clr'] }}</div>
+  <nav class="navbar navbar-expand-lg bg-body-tertiary" id="navbar-bing">
+    <div class="container-fluid">
+      <a class="navbar-brand" href="/">Math game</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+          <li class="nav-item">
+            <a class="nav-link active" aria-current="page" href="/climbs">Climbs</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link active" aria-current="page" href="/practice">Fractions</a>
+          </li>
+          </ul>
+          <li class="nav-item d-flex">
+            <a class="nav-link active" aria-current="page" href="/change-theme">Change theme</a>
+          </li>
+      </div>
+    </div>
+  </nav>
+  <div class="container">
+  <h1>Math Game Settings</h1>
+  <hr>
+  <form method="POST" action="/game">
+    <div class="form-group">
+      <label for="includeIntegers">Include Integers</label>
+      <input type="checkbox" id="includeIntegers" name="includeIntegers">
+    </div>
+    <div class="form-group">
+      <label for="includeIntegers">Include negatives</label>
+      <input type="checkbox" id="includeNegatives" name="includeNegatives">
+    </div>
+    <div class="form-group">
+      <label for="includeDecimals">Include Decimals</label>
+      <input type="checkbox" id="includeDecimals" name="includeDecimals" onchange="toggleDecimals(this)">
+    </div>
+    <div class="form-group">
+      <label for="decimalPlaces">Number of Decimal Places (if decimals are included)</label>
+      <input type="number" id="decimalPlaces" name="decimalPlaces" min="0" class="form-control disabled" disabled>
+    </div>
+    <hr>
+    <div class="form-group">
+      <label for="includeAddition">Include Addition</label>
+      <input type="checkbox" id="includeAddition" name="includeAddition" onchange="toggleAddition(this)">
+    </div>
+    <div class="form-group row">
+      <label for="additionBounds" class="col-sm-2 col-form-label">Addition Bounds</label>
+      <div class="col-sm-5">
+        <input type="number" id="additionBounds1" name="additionBounds1" class="form-control" placeholder="Upper bound for the first number">
+      </div>
+      <div class="col-sm-5">
+        <input type="number" id="additionBounds2" name="additionBounds2" class="form-control" placeholder="Upper bound for the second number">
+      </div>
+    </div>
+    <hr>
+    <div class="form-group">
+      <label for="includeSubtraction">Include Subtraction</label>
+      <input type="checkbox" id="includeSubtraction" name="includeSubtraction" onchange="toggleSubtraction(this)">
+    </div>
+    <div class="form-group row">
+      <label for="subtractionBounds" class="col-sm-2 col-form-label">Subtraction Bounds</label>
+      <div class="col-sm-5">
+        <input type="number" id="subtractionBounds1" name="subtractionBounds1" class="form-control" placeholder="Upper bound for the first number">
+      </div>
+      <div class="col-sm-5">
+        <input type="number" id="subtractionBounds2" name="subtractionBounds2" class="form-control" placeholder="Upper bound for the second number">
+      </div>
+    </div>
+    <hr>
+    <div class="form-group">
+      <label for="includeMultiplication">Include Multiplication</label>
+      <input type="checkbox" id="includeMultiplication" name="includeMultiplication" onchange="toggleMultiplication(this)">
+    </div>
+    <div class="form-group row">
+      <label for="multiplicationBounds" class="col-sm-2 col-form-label">Multiplication Bounds</label>
+      <div class="col-sm-5">
+        <input type="number" id="multiplicationBounds1" name="multiplicationBounds1" class="form-control" placeholder="Lower Bound">
+      </div>
+      <div class="col-sm-5">
+        <input type="number" id="multiplicationBounds2" name="multiplicationBounds2" class="form-control" placeholder="Upper Bound">
+      </div>
+    </div>
+    <hr>
+    <div class="form-group">
+      <label for="includeDivision">Include Division</label>
+      <input type="checkbox" id="includeDivision" name="includeDivision" onchange="toggleDivision(this)">
+    </div>
+    <div class="form-group row">
+      <label for="divisionBounds" class="col-sm-2 col-form-label">Division Bounds</label>
+      <div class="col-sm-5">
+        <input type="number" id="divisionBounds1" name="divisionBounds1" class="form-control" placeholder="Upper bound for the divisor number">
+      </div>
+      <div class="col-sm-5">
+        <input type="number" id="divisionBounds2" name="divisionBounds2" class="form-control" placeholder="Upper bound for the answer number">
+      </div>
+    </div>
+    <hr>
+    <div class="form-group">
+      <label for="timeLimit">Time Limit (seconds)</label>
+      <input type="number" id="timeLimit" name="timeLimit" min="0" class="form-control" required>
+    </div>
+    <button type="submit" class="btn btn-primary" onlick="localStorage.setItem('score', 0)">Start Game</button>
+    <button type="button" class="btn btn-secondary" onclick="clearForm()">Reset Form</button>
+  </form>
+</div>
+  <script>
+    function toggleDecimals(element) {
+      var decimalPlacesInput = document.getElementById("decimalPlaces");
+      if (element.checked) {
+        decimalPlacesInput.disabled = false;
+        decimalPlacesInput.classList.remove("disabled");
+        document.getElementById("decimalPlaces").value = '2';
+        document.getElementById("decimalPlaces").required = true;
+      } else {
+        decimalPlacesInput.disabled = true;
+        decimalPlacesInput.classList.add("disabled");
+        document.getElementById("decimalPlaces").value = '';
+        document.getElementById("decimalPlaces").required = false;
+      }
+    }
+
+    function toggleAddition(element) {
+      var additionBoundsInputs = document.querySelectorAll("#additionBounds1, #additionBounds2");
+      additionBoundsInputs.forEach(function(input) {
+        if (element.checked) {
+          input.disabled = false;
+          input.classList.remove("disabled");
+          document.getElementById("additionBounds1").value = '100';
+          document.getElementById("additionBounds2").value = '100';
+          document.getElementById("additionBounds1").required = true;
+          document.getElementById("additionBounds2").required = true;
+        } else {
+          input.disabled = true;
+          input.classList.add("disabled");
+          input.value = ''
+          document.getElementById("additionBounds1").disabled = true;
+          document.getElementById("additionBounds1").classList.add("disabled");
+          document.getElementById("additionBounds1").value = '';
+          document.getElementById("additionBounds2").disabled = true;
+          document.getElementById("additionBounds2").classList.add("disabled");
+          document.getElementById("additionBounds2").value = '';
+          document.getElementById("additionBounds1").required = false;
+          document.getElementById("additionBounds2").required = false;
+        }
+      });
+    }
+
+    function toggleSubtraction(element) {
+      var subtractionBoundsInputs = document.querySelectorAll("#subtractionBounds1, #subtractionBounds2");
+      subtractionBoundsInputs.forEach(function(input) {
+        if (element.checked) {
+          input.disabled = false;
+          input.classList.remove("disabled");
+          document.getElementById("subtractionBounds1").value = '100';
+          document.getElementById("subtractionBounds2").value = '100';
+          document.getElementById("subtractionBounds1").required = true;
+          document.getElementById("subtractionBounds2").required = true;
+        } else {
+          input.disabled = true;
+          input.classList.add("disabled");
+          input.value = ''
+          document.getElementById("subtractionBounds1").disabled = true;
+          document.getElementById("subtractionBounds1").classList.add("disabled");
+          document.getElementById("subtractionBounds1").value = '';
+          document.getElementById("subtractionBounds2").disabled = true;
+          document.getElementById("subtractionBounds2").classList.add("disabled");
+          document.getElementById("subtractionBounds2").value = '';
+          document.getElementById("subtractionBounds1").required = false;
+          document.getElementById("subtractionBounds2").required = false;
+        }
+      });
+    }
+
+    function toggleMultiplication(element) {
+      var multiplicationBoundsInputs = document.querySelectorAll("#multiplicationBounds1, #multiplicationBounds2");
+      multiplicationBoundsInputs.forEach(function(input) {
+        if (element.checked) {
+          input.disabled = false;
+          input.classList.remove("disabled");
+          document.getElementById("multiplicationBounds1").value = '20';
+          document.getElementById("multiplicationBounds2").value = '20';
+          document.getElementById("multiplicationBounds1").required = true;
+          document.getElementById("multiplicationBounds2").required = true;
+        } else {
+          input.disabled = true;
+          input.classList.add("disabled");
+          input.value = ''
+          document.getElementById("multiplicationBounds1").disabled = true;
+          document.getElementById("multiplicationBounds1").classList.add("disabled");
+          document.getElementById("multiplicationBounds1").value = '';
+          document.getElementById("multiplicationBounds2").disabled = true;
+          document.getElementById("multiplicationBounds2").classList.add("disabled");
+          document.getElementById("multiplicationBounds2").value = '';
+          document.getElementById("multiplicationBounds1").required = false;
+          document.getElementById("multiplicationBounds2").required = false;
+        }
+      });
+    }
+
+    function toggleDivision(element) {
+      var divisionBoundsInputs = document.querySelectorAll("#divisionBounds1, #divisionBounds2");
+      divisionBoundsInputs.forEach(function(input) {
+        if (element.checked) {
+          input.disabled = false;
+          input.classList.remove("disabled");
+          document.getElementById("divisionBounds1").value = '12';
+          document.getElementById("divisionBounds2").value = '12';
+          document.getElementById("divisionBounds1").required = true;
+          document.getElementById("divisionBounds2").required = true;
+        } else {
+          input.disabled = true;
+          input.classList.add("disabled");
+          input.value = '';
+          document.getElementById("divisionBounds1").disabled = true;
+          document.getElementById("divisionBounds1").classList.add("disabled");
+          document.getElementById("divisionBounds1").value = '';
+          document.getElementById("divisionBounds2").disabled = true;
+          document.getElementById("divisionBounds2").classList.add("disabled");
+          document.getElementById("divisionBounds2").value = '';
+          document.getElementById("divisionBounds1").required = false;
+          document.getElementById("divisionBounds2").required = false;
+        }
+      });
+    }
+    
+    function clearForm() {
+      document.getElementById("includeIntegers").checked = true;
+      document.getElementById("includeNegatives").checked = true;
+      document.getElementById("includeDecimals").checked = false;
+      document.getElementById("decimalPlaces").disabled = true;
+      document.getElementById("decimalPlaces").classList.add("disabled");
+      document.getElementById("decimalPlaces").value = '';
+
+  document.getElementById("includeAddition").checked = true;
+  document.getElementById("additionBounds1").required = true;
+  document.getElementById("additionBounds2").required = true;
+  document.getElementById("additionBounds1").disabled = false;
+  document.getElementById("additionBounds1").classList.remove("disabled");
+  document.getElementById("additionBounds1").value = '100';
+  document.getElementById("additionBounds2").disabled = false;
+  document.getElementById("additionBounds2").classList.remove("disabled");
+  document.getElementById("additionBounds2").value = '100';
+
+  document.getElementById("includeSubtraction").checked = true;
+  document.getElementById("subtractionBounds1").required = true;
+  document.getElementById("subtractionBounds2").required = true;
+  document.getElementById("subtractionBounds1").disabled = false;
+  document.getElementById("subtractionBounds1").classList.remove("disabled");
+  document.getElementById("subtractionBounds1").value = '100';
+  document.getElementById("subtractionBounds2").disabled = false;
+  document.getElementById("subtractionBounds2").classList.remove("disabled");
+  document.getElementById("subtractionBounds2").value = '100';
+
+  document.getElementById("includeMultiplication").checked = true;
+  document.getElementById("multiplicationBounds1").required = true;
+  document.getElementById("multiplicationBounds2").required = true;
+  document.getElementById("multiplicationBounds1").disabled = false;
+  document.getElementById("multiplicationBounds1").classList.remove("disabled");
+  document.getElementById("multiplicationBounds1").value = '20';
+  document.getElementById("multiplicationBounds2").disabled = false;
+  document.getElementById("multiplicationBounds2").classList.remove("disabled");
+  document.getElementById("multiplicationBounds2").value = '20';
+
+  document.getElementById("includeDivision").checked = true;
+  document.getElementById("divisionBounds1").required = true;
+  document.getElementById("divisionBounds2").required = true;
+  document.getElementById("divisionBounds1").disabled = false;
+  document.getElementById("divisionBounds1").classList.remove("disabled");
+  document.getElementById("divisionBounds1").value = '12';
+  document.getElementById("divisionBounds2").disabled = false;
+  document.getElementById("divisionBounds2").classList.remove("disabled");
+  document.getElementById("divisionBounds2").value = '12';
+
+  document.getElementById("timeLimit").value = '';
+    }
+    clearForm()
+  </script>
+  <script>
+    // Check for previous responses in local storage
+  const previousResponses = localStorage.getItem('mathGameResponses');
+  
+  if (previousResponses) {
+    // Parse the previous responses JSON string
+    const responses = JSON.parse(previousResponses);
+  
+    // Set the values of form elements based on previous responses
+    document.getElementById('includeIntegers').checked = responses.includeIntegers;
+    document.getElementById('includeNegatives').checked = responses.includeNegatives;
+    document.getElementById('includeDecimals').checked = responses.includeDecimals;
+    document.getElementById('decimalPlaces').value = responses.decimalPlaces;
+    document.getElementById('includeAddition').checked = responses.includeAddition;
+    document.getElementById('additionBounds1').value = responses.additionBounds1;
+    document.getElementById('additionBounds2').value = responses.additionBounds2;
+    document.getElementById('includeSubtraction').checked = responses.includeSubtraction;
+    document.getElementById('subtractionBounds1').value = responses.subtractionBounds1;
+    document.getElementById('subtractionBounds2').value = responses.subtractionBounds2;
+    document.getElementById('includeMultiplication').checked = responses.includeMultiplication;
+    document.getElementById('multiplicationBounds1').value = responses.multiplicationBounds1;
+    document.getElementById('multiplicationBounds2').value = responses.multiplicationBounds2;
+    document.getElementById('includeDivision').checked = responses.includeDivision;
+    document.getElementById('divisionBounds1').value = responses.divisionBounds1;
+    document.getElementById('divisionBounds2').value = responses.divisionBounds2;
+    document.getElementById('timeLimit').value = responses.timeLimit;
+  }
+  
+  // Event listener for form submission
+  document.querySelector('form').addEventListener('submit', function(e) {
+    // Prevent the default form submission behavior
+    e.preventDefault();
+  
+    // Create an object to store the user's responses
+    const responses = {
+      includeIntegers: document.getElementById('includeIntegers').checked,
+      includeNegatives: document.getElementById('includeNegatives').checked,
+      includeDecimals: document.getElementById('includeDecimals').checked,
+      decimalPlaces: document.getElementById('decimalPlaces').value,
+      includeAddition: document.getElementById('includeAddition').checked,
+      additionBounds1: document.getElementById('additionBounds1').value,
+      additionBounds2: document.getElementById('additionBounds2').value,
+      includeSubtraction: document.getElementById('includeSubtraction').checked,
+      subtractionBounds1: document.getElementById('subtractionBounds1').value,
+      subtractionBounds2: document.getElementById('subtractionBounds2').value,
+      includeMultiplication: document.getElementById('includeMultiplication').checked,
+      multiplicationBounds1: document.getElementById('multiplicationBounds1').value,
+      multiplicationBounds2: document.getElementById('multiplicationBounds2').value,
+      includeDivision: document.getElementById('includeDivision').checked,
+      divisionBounds1: document.getElementById('divisionBounds1').value,
+      divisionBounds2: document.getElementById('divisionBounds2').value,
+      timeLimit: document.getElementById('timeLimit').value
+    };
+  
+    // Store the user's responses in local storage
+    localStorage.setItem('mathGameResponses', JSON.stringify(responses));
+  
+    // Reset the score in local storage
+    localStorage.setItem('score', 0);
+  
+    // Submit the form
+    this.submit();
+  });
+  toggleDecimals(document.getElementById('includeDecimals'))
+  toggleAddition(document.getElementById('includeAddition'))
+ toggleSubtraction(document.getElementById('includeSubtraction'))
+toggleMultiplication(document.getElementById('includeMultiplication'))
+toggleDivision(document.getElementById('includeDivision'))
+  </script>
+  <script>
+    function toggleDarkMode() {
+      var clr = document.getElementById('clr').textContent
+      var body = document.body;
+      console.log(clr)
+      console.log(clr == 1)
+      if (parseInt(clr) == 1) {
+        // Switch to dark mode
+        body.style.backgroundColor = '#000000';
+        body.style.color = '#ffffff';
+        document.getElementById('navbar-bing').setAttribute('data-bs-theme', 'dark');
+      }
+    }
+    toggleDarkMode();
+  </script>
+  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.min.js" integrity="sha384-fbbOQedDUMZZ5KreZpsbe1LCZPVmfTnH7ois6mU1QK+m14rQ1l2bGBq41eYeM/fS" crossorigin="anonymous"></script>
+</body>
+</html>

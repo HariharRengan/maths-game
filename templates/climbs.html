@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css">
+    <title>Climbs</title>
+</head>
+<body>
+  <div style='display: none;' id='clr'>{{ session['clr'] }}</div>
+  <nav class="navbar navbar-expand-lg bg-body-tertiary" id="navbar-bing">
+    <div class="container-fluid">
+      <a class="navbar-brand" href="/">Math game</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+          <li class="nav-item">
+            <a class="nav-link active" aria-current="page" href="/climbs">Climbs</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link active" aria-current="page" href="/practice">Fractions</a>
+          </li>
+        </ul>
+        <li class="nav-item d-flex">
+          <a class="nav-link active" aria-current="page" href="/change-theme">Change theme</a>
+        </li>
+      </div>
+    </div>
+  </nav>
+  <br>
+  <div class="card-container d-flex flex-wrap justify-content-center">
+    <div class="card mx-2 mb-4" style="width: 18rem;">
+      <div class="card-body">
+        <h5 class="card-title">Fibonacci sequence</h5>
+        <h6 class="card-subtitle mb-2 text-body-secondary">Climb the fibonacci</h6>
+        <p class="card-text">A sequence where the previous two terms sum to make the current term. Try not to rely on addition!</p>
+        <a href="/climbs/fibonacci/1/" class="card-link">Start climb</a>
+      </div>
+    </div>
+  
+    <div class="card mx-2 mb-4" style="width: 18rem;">
+      <div class="card-body">
+        <h5 class="card-title">Square numbers</h5>
+        <h6 class="card-subtitle mb-2 text-body-secondary">Climb square numbers</h6>
+        <p class="card-text">A sequence where the term is the term number squared, making a square with the numbers.</p>
+        <a href="/climbs/n**2/1/" class="card-link">Start climb</a>
+      </div>
+    </div>
+  
+    <div class="card mx-2 mb-4" style="width: 18rem;">
+      <div class="card-body">
+        <h5 class="card-title">Triangle numbers</h5>
+        <h6 class="card-subtitle mb-2 text-body-secondary">Climb triangle numbers</h6>
+        <p class="card-text">A sequence where each term, if each term was represented as dots, would make a triangle</p>
+        <a href="/climbs/0.5*n*(n+1)/1/" class="card-link">Start climb</a>
+      </div>
+    </div>
+  </div>
+  <form style="padding-top: 10px; text-align: center; align-self: center;" action="/custom-climb" method="POST">
+    <input type="text" placeholder="Custom nth term rule" id="nth" name="nth" style="padding-bottom: 1px;"><br>
+    <input type="submit" class="btn btn-primary">
+  </form>
+  
+      <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.min.js" integrity="sha384-fbbOQedDUMZZ5KreZpsbe1LCZPVmfTnH7ois6mU1QK+m14rQ1l2bGBq41eYeM/fS" crossorigin="anonymous"></script>
+<script>
+  function toggleDarkMode() {
+    var clr = document.getElementById('clr').textContent
+    var body = document.body;
+    console.log(clr)
+    console.log(clr == 1)
+    if (parseInt(clr) == 1) {
+      // Switch to dark mode
+      body.style.backgroundColor = '#000000';
+      body.style.color = '#ffffff';
+      document.getElementById('navbar-bing').setAttribute('data-bs-theme', 'dark');
+    }
+  }
+  toggleDarkMode();
+</script>
+</body>
+</html>
