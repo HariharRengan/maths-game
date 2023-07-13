@@ -26,7 +26,7 @@ def trim(s):
         return s
 
 def fracans(raw):
-    for i in range(2, min(raw) + 1):
+    for i in range(2, abs(min(raw)) + 1):
         while raw[0] % i == raw[1] % i == 0:
             raw[0] /= i
             raw[1] /= i
@@ -178,7 +178,7 @@ def bing():
 
 @app.route('/climbs/<sequence>/<tn>/finish')
 def bingbongbing(sequence, tn):
-    seqdict = {'n**2' : 'Square numbers', '0.5*n*(n+1)' : 'Triangle numbers'}
+    seqdict = {'n**2' : 'Square numbers', '0.5*n*(n+1)' : 'Triangle numbers', 'n**3':'Cube numbers'}
     try:
         sequence = seqdict[sequence]
     except:
@@ -194,6 +194,14 @@ def climb2(sequence, tn):
     if request.method == 'GET':
         if not int(tn) - 1:
             session['anss'] = []
+        if sequence == 'pi':
+            n = open('digits.txt').read(int(tn))
+            if n == '\n':
+                n = open('digits.txt').read(int(tn))
+            print(n)
+            print('N')
+            session['ans'] = int(n[::-1][0])
+            return render_template('climbp.html', url=f'/climbs/{sequence}/{tn}', tn=tn)
         if sequence == 'fibonacci':
             if int(tn) - 1:
                 session['ans'] = [session['ans'][1], sum(session['ans'])]
@@ -220,10 +228,9 @@ def climb2(sequence, tn):
     
 @app.route('/practice')
 def fractions():
-    t = random.choice([0, 1])
-    a = [random.randint(1, 20), random.randint(1, 20) if t else random.choice([1, 2, 3, 4, 5, 6, 8, 9, 10, 12])]
-    b = [random.randint(1, 20), random.randint(1, 20) if t else random.choice([1, 2, 3, 4, 5, 6, 8, 9, 10, 12])]
-    op = random.choice(['Multiplication', 'Division']) if t else random.choice(['Addition', 'Subtraction'])
+    a = [random.randint(1, 20), random.choice([1, 2, 3, 4, 5, 6, 8, 9, 10, 12, 15, 20, 25])]
+    b = [random.randint(1, 20), random.choice([1, 2, 3, 4, 5, 6, 8, 9, 10, 12, 15, 20, 25])]
+    op = random.choice(['Multiplication', 'Division', 'Addition', 'Subtraction'])
     print(op)
     if op == 'Multiplication':
         n = [a[0]*b[0], a[1]*b[1]]
