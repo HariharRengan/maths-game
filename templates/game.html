@@ -74,8 +74,7 @@
       var userAnswer = document.getElementById('answer').value;
       var correctAnswer = '{{ answer }}';
       quest++;
-      console.log(correctAnswer)
-      console.log(userAnswer)
+      localStorage.setItem('quest', quest);
       if (checkE(userAnswer, correctAnswer)) {
         score++;
         localStorage.setItem('score', score);
