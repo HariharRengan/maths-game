@@ -203,7 +203,7 @@ def climb2(sequence, tn):
             print(n)
             print('N')
             session['ans'] = int(n[::-1][0])
-            return render_template('climbp.html', url=f'/climbs/{sequence}/{tn}', tn=tn)
+            return render_template('climmisc.html', url=f'/climbs/{sequence}/{tn}', tn=tn)
         if sequence == 'fibonacci':
             if int(tn) - 1:
                 session['ans'] = [session['ans'][1], sum(session['ans'])]
@@ -211,7 +211,7 @@ def climb2(sequence, tn):
                 session['ans'] = [0, 1]
             return render_template('climbp.html', url=f'/climbs/{sequence}/{tn}', tn=tn)
         session['ans'] = eval(sequence.replace('n', tn))
-        return render_template('climbp.html', url=f'/climbs/{sequence}/{tn}', tn=tn)
+        return render_template('climmisc.html', url=f'/climbs/{sequence}/{tn}', tn=tn)
     else:
         uans = int(request.form['ans'])
         print(str(uans), session['ans'], uans == session['ans'])
@@ -296,7 +296,7 @@ def custom():
         eval(n.replace('n', '1'))
     except Exception as e:
         return redirect('/climbs')
-    return redirect(f'/climbs/{n}/1/')
+    return redirect(f'/climbs/{n}')
 
 @app.route('/change-theme')
 def duiweyuwl():
@@ -307,6 +307,10 @@ def duiweyuwl():
         print('err')
         session['clr'] = 1
     return redirect('/')
+
+@app.route('/climbs/<seq>')
+def climbim(seq):
+    return render_template('climbp.html', seq = seq)
 
 if __name__ == '__main__':
     app.run(debug=True)

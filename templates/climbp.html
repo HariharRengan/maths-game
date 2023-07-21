@@ -28,6 +28,22 @@
     }
   </style>
   <script>
+    var termNumber = 1;
+    var seq = "{{ seq }}";
+    function evaluateExpression() {
+      var n = termNumber;
+      var correctAnswer = eval(seq);
+      var userAnswer = parseFloat(document.getElementById("ans").value);
+      
+      if (userAnswer === correctAnswer) {
+        termNumber++;
+        document.getElementById("ans").value = "";
+        document.getElementById('clong').innerHTML += correctAnswer.toString() + ', '
+      } else {
+        window.location.href += '/' + termNumber.toString() + '/finish';
+      }
+    }
+
     function setFocus() {
       document.getElementById("ans").focus();
     }
@@ -35,9 +51,9 @@
 </head>
 <body onload="setFocus()">
   <div style='display: none; font-size: large;' id='clr'>{{ session['clr'] }}</div>
-  {% for i in session['anss'] %}{{ i }}, {% endfor %}
+  <div id="clong"></div>
   <div class="form-container">
-    <form method="POST" action="{{url}}" class="needs-validation">
+    <form method="POST" action="{{url}}" class="needs-validation" onsubmit="evaluateExpression(); return false;">
       <div class="mb-3">
         <input type="number" class="form-control" id="ans" name="ans" required>
       </div>

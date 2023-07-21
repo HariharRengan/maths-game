@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Number Input Form</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css">
+  <style>
+    .form-container {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+    .form-container {
+      text-align: center;
+    }
+    .form-container label {
+      display: block;
+      font-size: 20px;
+    }
+    .form-container input[type="number"] {
+      width: 200px;
+      height: 40px;
+      font-size: 24px;
+    }
+    .form-container button[type="submit"] {
+      margin-top: 10px;
+      font-size: 18px;
+    }
+  </style>
+  <script>
+    function setFocus() {
+      document.getElementById("ans").focus();
+    }
+  </script>
+</head>
+<body onload="setFocus()">
+  <div style='display: none; font-size: large;' id='clr'>{{ session['clr'] }}</div>
+  {% for i in session['anss'] %}{{ i }}, {% endfor %}
+  <div class="form-container">
+    <form method="POST" action="{{url}}" class="needs-validation">
+      <div class="mb-3">
+        <input type="number" class="form-control" id="ans" name="ans" required>
+      </div>
+      <button type="submit" class="btn btn-primary">Submit</button>
+    </form>
+  </div>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+  <script>
+    function toggleDarkMode() {
+      var clr = document.getElementById('clr').textContent
+      var body = document.body;
+      console.log(clr)
+      console.log(clr == 1)
+      if (parseInt(clr) == 1) {
+        // Switch to dark mode
+        body.style.backgroundColor = '#000000';
+        body.style.color = '#ffffff';
+        document.getElementById('navbar-bing').setAttribute('data-bs-theme', 'dark');
+      }
+    }
+    toggleDarkMode();
+  </script>
+</body>
+</html>
