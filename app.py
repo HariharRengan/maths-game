@@ -16,6 +16,8 @@ def parse(expression, var='n'):
 
     return expression
 
+def mfrac(n):
+    return [n[0] % n[1], n[1], int(n[0]/n[1])]
 
 def trim(s):
     s = s.replace('e', '')
@@ -112,7 +114,7 @@ def game_1():
     negative = [1, 1, 1]
     negative += [-1 if negatives else 1]
     
-    if include_addition:
+    if include_addition:    
         num1 = random.randint(0, addition_bounds1) * random.choice(negative)
         num2 = random.randint(0, addition_bounds2) * random.choice(negative)
         
@@ -227,9 +229,18 @@ def climb2(sequence, tn):
         return redirect(f'/climbs/{sequence}/{x}')
     
 @app.route('/practice')
-def fractions():
-    a = [random.randint(1, 20), random.choice([1, 2, 3, 4, 5, 6, 8, 9, 10, 12, 15, 20, 25])]
-    b = [random.randint(1, 20), random.choice([1, 2, 3, 4, 5, 6, 8, 9, 10, 12, 15, 20, 25])]
+def pracfrac():
+    return redirect('/practice/0')
+    
+@app.route('/practice/<dif>')
+def fractions(dif):
+    a = [1, 2, 3, 4, 5, 6, 8, 9, 10, 12, 15, 20, 25]
+    print(a)
+    if dif == '1':
+        print(1)
+        a += [7, 11, 13, 14, 16, 17, 18 , 19]
+    a = [random.randint(1, 20), random.choice(a)]
+    b = [random.randint(1, 20), random.choice(a)]
     op = random.choice(['Multiplication', 'Division', 'Addition', 'Subtraction'])
     print(op)
     if op == 'Multiplication':
@@ -242,7 +253,35 @@ def fractions():
         n = [a[1]*b[0] - a[0]*b[1], a[1]*b[1]]
     ans = fracans(n)
     print(ans)
-    return render_template('fractions.html', a = a, b = b, ans = ans, op = op)
+    return render_template('fractions.html', a = a, b = b, ans = ans, op = op, int = int, dif = dif)
+
+@app.route('/mixed/<dif>')
+def mixedfrac(dif):
+    a = [1, 2, 3, 4, 5, 6, 8, 9, 10, 12, 15, 20, 25]
+    print(a)
+    if dif == '1':
+        print(1)
+        a += [7, 11, 13, 14, 16, 17, 18 , 19]
+    a = [random.randint(1, 20), random.choice(a)]
+    b = [random.randint(1, 20), random.choice(a)]
+    if not mfrac(a)[0]:
+        a[0] += 1
+    if not mfrac(b)[0]:
+        b[0] += 1
+    op = random.choice(['Multiplication', 'Division', 'Addition', 'Subtraction'])
+    print(op)
+    if op == 'Multiplication':
+        n = [a[0]*b[0], a[1]*b[1]]
+    elif op == 'Division':
+        n = [a[0]*b[1], a[1]*b[0]]
+    elif op == 'Addition':
+        n = [a[1]*b[0] + a[0]*b[1], a[1]*b[1]]
+    elif op == 'Subtraction':
+        n = [a[1]*b[0] - a[0]*b[1], a[1]*b[1]]
+    ans = fracans(n)
+    ans = mfrac(ans)
+    print(ans)
+    return render_template('mixed.html', a = mfrac(a), b = mfrac(b), ans = ans, op = op, int = int, dif = dif)
 
 @app.route('/custom-climb', methods=['POST'])
 def custom():
