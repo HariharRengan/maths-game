@@ -3,7 +3,7 @@ import random, time
 import string
 
 app = Flask(__name__)
-app.secret_key = 'your_secret_key'
+app.secret_key = 'secret'
 
 def parse(expression, var='n'):
     expression = expression.replace('^', '**') 
