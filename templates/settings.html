@@ -30,6 +30,9 @@
           <li class="nav-item">
             <a class="nav-link active" aria-current="page" href="/practice">Fractions</a>
           </li>
+          <li class="nav-item">
+            <a class="nav-link active" aria-current="page" href="/mixed/0">Mixed Fractions</a>
+          </li>
           </ul>
           <li class="nav-item d-flex">
             <a class="nav-link active" aria-current="page" href="/change-theme">Change theme</a>
@@ -447,9 +450,9 @@ toggleDivision(document.getElementById('includeDivision'))
       document.getElementById("includeIntegers").checked = true;
       document.getElementById("includeNegatives").checked = true;
       document.getElementById("includeDecimals").checked = false;
-      document.getElementById("decimalPlaces").disabled = false;
-      document.getElementById("decimalPlaces").classList.remove("disabled");
-      document.getElementById("decimalPlaces").value = '1';
+      document.getElementById("decimalPlaces").disabled = true;
+      document.getElementById("decimalPlaces").classList.add("disabled");
+      document.getElementById("decimalPlaces").value = '';
 
   document.getElementById("includeAddition").checked = true;
   document.getElementById("additionBounds1").required = true;
@@ -497,9 +500,9 @@ toggleDivision(document.getElementById('includeDivision'))
       document.getElementById("includeIntegers").checked = true;
       document.getElementById("includeNegatives").checked = true;
       document.getElementById("includeDecimals").checked = false;
-      document.getElementById("decimalPlaces").disabled = false;
-      document.getElementById("decimalPlaces").classList.remove("disabled");
-      document.getElementById("decimalPlaces").value = '2';
+      document.getElementById("decimalPlaces").disabled = true;
+      document.getElementById("decimalPlaces").classList.add("disabled");
+      document.getElementById("decimalPlaces").value = '';
 
   document.getElementById("includeAddition").checked = true;
   document.getElementById("additionBounds1").required = true;

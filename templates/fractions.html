@@ -4,6 +4,17 @@
   <title>Fraction {{ op }}</title>
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css">
+  <style>
+    .fraction {
+            display: inline-block;
+            text-align: center;
+            vertical-align: middle;
+        }
+        .fraction-bar {
+            border-top: 1px solid #000;
+            width: 100%;
+        }
+  </style>
 </head>
 <body>
   <div style='display: none;' id='clr'>{{ session['clr'] }}</div>
@@ -21,6 +32,18 @@
               <li class="nav-item">
                 <a class="nav-link active" aria-current="page" href="/practice">Fractions</a>
               </li>
+              <li class="nav-item">
+                <a class="nav-link active" aria-current="page" href="/mixed/0">Mixed Fractions</a>
+              </li>
+              {% if int(dif) %}
+              <li class="nav-item">
+                <a class="nav-link active" class='btn btn-danger' aria-current="page" href="/practice/0">Easier</a>
+              </li>
+              {% else %}
+              <li class="nav-item">
+                <a class="nav-link active" class='btn btn-danger' aria-current="page" href="/practice/1">Difficult</a>
+              </li>
+              {% endif %}
             </ul>
             <li class="nav-item d-flex">
               <a class="nav-link active" aria-current="page" href="/change-theme">Change theme</a>
@@ -33,10 +56,28 @@
     <h2>Fraction {{ op }}</h2>
     <div class="row">
       <div class="col-md-6">
-        <h4>First Fraction: <sup>{{ a[0] }}</sup>&frasl;<sub>{{ a[1] }}</sub></h4>
+        {% if a[1] == 1%}
+        <h4>First Fraction: {{ a[0] }}</h4>
+        {% else %}
+        <h4>First Fraction:
+        <div class="fraction">
+          <span>{{ a[0] }}</span>
+          <div class="fraction-bar"></div>
+          <span>{{ a[1] }}</span>
+      </div></h4>
+        <!-- <h4>First Fraction: <sup>{{ a[0] }}</sup>&frasl;<sub>{{ a[1] }}</sub></h4> -->
+        {% endif %}
       </div>
       <div class="col-md-6">
-        <h4>Second Fraction: <sup>{{ b[0] }}</sup>&frasl;<sub>{{ b[1] }}</h4>
+        {% if b[1] == 1%}
+        <h4>Second Fraction: {{ b[0] }}</h4>
+        {% else %}
+        <h4>Second Fraction:
+          <div class="fraction">
+            <span>{{ b[0] }}</span>
+            <div class="fraction-bar"></div>
+            <span>{{ b[1] }}</span>
+        </div></h4>        {% endif %}
       </div>
     </div>
     <div class="form-group">

@@ -28,7 +28,7 @@
         <input type="number" class="form-control" id="answer" name="answer" required>
       </div>
       <button type="submit" id='bing' class="btn btn-primary">Submit</button>
-      <button class="btn btn-secondary" onclick="window.location.reload()">Skip</button>
+      <button class="btn btn-secondary" onclick="fullskip()">Skip</button>
     </form>
   </div>
   <script>
@@ -81,6 +81,11 @@
         window.location.reload()
       }
     });
+    function fullskip() {
+      var skips = parseInt(localStorage.getItem('skips')) || 0;
+      localStorage.setItem('skips', skips + 1)
+      window.location.reload()
+    }
   </script>
   <script>
     function toggleDarkMode() {
