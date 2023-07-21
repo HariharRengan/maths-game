@@ -37,7 +37,7 @@
   <div style='display: none; font-size: large;' id='clr'>{{ session['clr'] }}</div>
   {% for i in session['anss'] %}{{ i }}, {% endfor %}
   <div class="form-container">
-    <form method="POST" action="{{url}}" class="needs-validation">
+    <form method="POST" class="needs-validation">
       <div class="mb-3">
         <input type="number" class="form-control" id="ans" name="ans" required>
       </div>
