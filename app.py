@@ -13,7 +13,6 @@ def parse(expression, var='n'):
         if expression[i].isdigit() and expression[i+1] == var:
             expression = expression[:i+1] + '*' + expression[i+1:]
         i += 1
-
     return expression
 
 def mfrac(n):
