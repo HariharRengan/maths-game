@@ -12,6 +12,17 @@
     body {
       padding-bottom: 10px;;
     }
+    footer {
+      text-align: center; 
+      padding: 20px; 
+      margin-top: 10px; 
+      background-color: #f0f0f0;
+      padding-top: 30px;
+    }
+    .dark-footer {
+      background-color: #333;
+      color: #f0f0f0;
+    }
   </style>
 </head>
 <body>
@@ -130,6 +141,9 @@
     <button type="button" class="btn btn-secondary" onclick="clearForm()">Reset Form</button>
   </form>
 </div>
+<footer id="footer-code">
+  <p>Coded by Harihar Rengan</p>
+</footer>
 <!-- <footer class="footer bg-light">
   <div class="container">
     <div class="row">
@@ -391,6 +405,7 @@ toggleDivision(document.getElementById('includeDivision'))
         body.style.backgroundColor = '#000000';
         body.style.color = '#ffffff';
         document.getElementById('navbar-bing').setAttribute('data-bs-theme', 'dark');
+        document.getElementById('footer-code').classList.toggle('dark-footer')
       }
     }
     toggleDarkMode();
