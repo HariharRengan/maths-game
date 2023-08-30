@@ -252,7 +252,7 @@ def fractions(dif):
         n = [a[1]*b[0] - a[0]*b[1], a[1]*b[1]]
     ans = fracans(n)
     print(ans)
-    return render_template('fractions.html', a = a, b = b, ans = ans, op = op, int = int, dif = dif)
+    return render_template('fractions.html', a = a, b = b, ans = ans, op = op, int = int, dif = dif, d = {'Multiplication' : 'x', 'Division' : '÷', 'Addition' : '+', 'Subtraction' : '-'})
 
 @app.route('/mixed/<dif>')
 def mixedfrac(dif):
@@ -280,7 +280,7 @@ def mixedfrac(dif):
     ans = fracans(n)
     ans = mfrac(ans)
     print(ans)
-    return render_template('mixed.html', a = mfrac(a), b = mfrac(b), ans = ans, op = op, int = int, dif = dif)
+    return render_template('mixed.html', a = mfrac(a), b = mfrac(b), ans = ans, op = op, int = int, dif = dif, d = {'Multiplication' : 'x', 'Division' : '÷', 'Addition' : '+', 'Subtraction' : '-'})
 
 @app.route('/custom-climb', methods=['POST'])
 def custom():
