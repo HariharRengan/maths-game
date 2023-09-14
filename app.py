@@ -5,6 +5,52 @@ import string
 app = Flask(__name__)
 app.secret_key = 'secret'
 
+def sieve_of_atkin(limit):
+    # 2 and 3 are prime numbers
+    if limit > 2:
+        yield 2
+    if limit > 3:
+        yield 3
+
+    # Sieve of Atkin requires initialization for the prime candidates
+    sieve = [False] * (limit + 1)
+    for x in range(1, int(limit ** 0.5) + 1):
+        for y in range(1, int(limit ** 0.5) + 1):
+            n = 4 * x**2 + y**2
+            if n <= limit and (n % 12 == 1 or n % 12 == 5):
+                sieve[n] = not sieve[n]
+
+            n = 3 * x**2 + y**2
+            if n <= limit and n % 12 == 7:
+                sieve[n] = not sieve[n]
+
+            n = 3 * x**2 - y**2
+            if x > y and n <= limit and n % 12 == 11:
+                sieve[n] = not sieve[n]
+
+    # Mark all multiples of square numbers as non-prime
+    for x in range(5, int(limit ** 0.5) + 1):
+        if sieve[x]:
+            for y in range(x**2, limit + 1, x**2):
+                sieve[y] = False
+
+    # Generate prime numbers from the sieve
+    for x in range(5, limit + 1):
+        if sieve[x]:
+            yield x
+
+def generate_prime_numbers(n):
+    prime_list = []
+    limit = 1000000  # A reasonably large limit to ensure at least 1000 prime numbers
+    for prime in sieve_of_atkin(limit):
+        prime_list.append(prime)
+        if len(prime_list) == n:
+            break
+    return prime_list
+
+# Generate an array of the first 1000 prime numbers using the Sieve of Atkin
+prime_array = generate_prime_numbers(1000000)
+
 def parse(expression, var='n'):
     expression = expression.replace('^', '**') 
     expression = expression.replace(' ', '')
@@ -35,6 +81,7 @@ def fracans(raw):
 
 @app.route('/')
 def home():
+    session['page'] = '/'
     try:
         session['clr']
     except:
@@ -84,6 +131,7 @@ def game():
 
 @app.route('/game', strict_slashes=False)
 def game_1():
+    session['page'] = '/game'
     time_limit = session.get('time_limit')
     if time.time() > time_limit:
         return redirect('/scoring')
@@ -175,10 +223,12 @@ def game_1():
 
 @app.route('/scoring')
 def bing():
+    session['page'] = '/scoring'
     return render_template('score.html')
 
 @app.route('/climbs/<sequence>/<tn>/finish')
 def bingbongbing(sequence, tn):
+    session['page'] = f'/climbs/{sequence}/{tn}/finish'
     seqdict = {'n**2' : 'Square numbers', '0.5*n*(n+1)' : 'Triangle numbers', 'n**3':'Cube numbers'}
     try:
         sequence = seqdict[sequence]
@@ -188,10 +238,12 @@ def bingbongbing(sequence, tn):
 
 @app.route('/climbs', strict_slashes=False)
 def climbs():
+    session['page'] = '/climbs'
     return render_template('climbs.html')
 
 @app.route('/climbs/<sequence>/<tn>/', methods=['GET', 'POST'])
 def climb2(sequence, tn):
+    session['page'] = f'/climbs/{sequence}/{tn}/'
     if request.method == 'GET':
         if not int(tn) - 1:
             session['anss'] = []
@@ -202,6 +254,9 @@ def climb2(sequence, tn):
             print(n)
             print('N')
             session['ans'] = int(n[::-1][0])
+            return render_template('climmisc.html', url=f'/climbs/{sequence}/{tn}', tn=tn)
+        if sequence == 'primes':
+            session['ans'] = prime_array[int(tn) - 1]
             return render_template('climmisc.html', url=f'/climbs/{sequence}/{tn}', tn=tn)
         if sequence == 'fibonacci':
             if int(tn) - 1:
@@ -229,10 +284,12 @@ def climb2(sequence, tn):
     
 @app.route('/practice')
 def pracfrac():
+    session['page'] = '/practice'
     return redirect('/practice/0')
     
 @app.route('/practice/<dif>')
 def fractions(dif):
+    session['page'] = f'/practice/{dif}'
     a = [1, 2, 3, 4, 5, 6, 8, 9, 10, 12, 15, 20, 25]
     print(a)
     if dif == '1':
@@ -256,6 +313,7 @@ def fractions(dif):
 
 @app.route('/mixed/<dif>')
 def mixedfrac(dif):
+    session['page'] = f'/mixed/{dif}'
     a = [1, 2, 3, 4, 5, 6, 8, 9, 10, 12, 15, 20, 25]
     print(a)
     if dif == '1':
@@ -284,6 +342,7 @@ def mixedfrac(dif):
 
 @app.route('/custom-climb', methods=['POST'])
 def custom():
+    session['page'] = '/custom-climb'
     n = request.form['nth']
     for i in string.ascii_letters:
         if i == 'n':
@@ -305,10 +364,11 @@ def duiweyuwl():
     except:
         print('err')
         session['clr'] = 1
-    return redirect('/')
+    return redirect(session['page'])
 
 @app.route('/climbs/<seq>')
 def climbim(seq):
+    session['page'] = f'/climbs/{seq}'
     return render_template('climbp.html', seq = seq)
 
 if __name__ == '__main__':
