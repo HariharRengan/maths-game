@@ -38,7 +38,7 @@
               </li>
               <li class="nav-item d-flex">
                 <a class="nav-link active" aria-current="page" href="/binomial">Binomial</a>
-              </li>
+            </li>
             </ul>
             <li class="nav-item d-flex">
               <a class="nav-link active" aria-current="page" href="/change-theme">Change theme</a>
@@ -48,69 +48,14 @@
       </nav>
       <br>
   <div class="container">
-    <h2>Fraction {{ op }}</h2>
-    {% if int(dif) %}
-      <a class="nav-link active" class='btn btn-danger' aria-current="page" href="/practice/0"><button type="button" class="btn btn-success">Easy</button></a>
-    {% else %}
-      <a class="nav-link active" class='btn btn-danger' aria-current="page" href="/practice/1"><button type="button" class="btn btn-danger">Difficult</button></a>
-    {% endif %}
-    <div class="row">
-      <div class="col-md-6">
-        {% if a[1] == 1%}
-        <h4>First Fraction: {{ a[0] }}</h4>
-        {% else %}
-        <h4>First Fraction:
-          {% if a[2] != 0 %}{{ a[2] }}{% endif %}<div class="fraction">
-          <span>{{ a[0] }}</span>
-          <div class="fraction-bar"></div>
-          <span>{{ a[1] }}</span>
-      </div></h4>
-        {% endif %}
-      </div>
-      <div class="col-md-6">
-        {% if b[1] == 1%}
-        <h4>Second Fraction: {{ b[0] }}</h4>
-        {% else %}
-        <h4>Second Fraction:
-          {% if b[2] != 0 %}{{ b[2] }}{% endif %}<div class="fraction">
-            <span>{{ b[0] }}</span>
-            <div class="fraction-bar"></div>
-            <span>{{ b[1] }}</span>
-        </div></h4>        {% endif %}
-      </div>
-    </div>
     <div style="overflow: nowrap;">
       <h4>
-    {% if a[1] == 1%}
-        {{ a[0] }}
-        {% else %}
-          {% if a[2] != 0 %}{{ a[2] }}{% endif %}<div class="fraction">
-          <span>{{ a[0] }}</span>
-          <div class="fraction-bar"></div>
-          <span>{{ a[1] }}</span>
-      </div>
-        {% endif %}
-		{{ d[op] }}
-		{% if b[1] == 1%}
-        {{ b[0] }}
-        {% else %}
-          {% if b[2] != 0 %}{{ b[2] }}{% endif %}<div class="fraction">
-            <span>{{ b[0] }}</span>
-            <div class="fraction-bar"></div>
-            <span>{{ b[1] }}</span>
-        </div>        {% endif %}</h4>
+        For each number n, enter the coefficients of the expanded expression (a + b)^n. <br>Think of this as entering a single integer that represents the (n + 1)th row on Pascal's triangle.<br>
+        Enter the value for (a + b)^{{n}} (or the {{n + 1}}th row of Pascals triangle):</h4>
       </div>
     <div class="form-group">
-      <label for="numerator">Integer part:</label>
-      <input type="text" class="form-control" id="intpart" placeholder="Enter the integer part">
-    </div>
-    <div class="form-group">
-      <label for="numerator">Numerator:</label>
-      <input type="text" class="form-control" id="numerator" placeholder="Enter the numerator">
-    </div>
-    <div class="form-group">
-      <label for="denominator">Denominator:</label>
-      <input type="text" class="form-control" id="denominator" placeholder="Enter the denominator">
+      <label for="numerator">Answer:</label>
+      <input type="text" class="form-control" id="intpart" placeholder="Enter the answer">
     </div>
     <div class="form-group">
       <button type="button" class="btn btn-primary" onclick="checkAnswer()">Check Answer</button>
@@ -127,15 +72,8 @@
 }
 
       function checkAnswer() {
-        var numerator = parseInt(document.getElementById("numerator").value.trim());
-        var denominator = parseInt(document.getElementById("denominator").value.trim());
-        var intpart = parseInt(document.getElementById("intpart").value.trim());
-        var userAnswer = '[' + numerator + ', ' + denominator + ', ' + intpart + ']';
+        var userAnswer = parseInt(document.getElementById("intpart").value.trim());
         var expectedAnswer = document.getElementById("expectedAnswer").textContent;
-        console.log(expectedAnswer)
-        console.log(expectedAnswer, typeof(expectedAnswer), userAnswer, typeof(userAnswer))
-
-        // Checking if the user's answer matches the expected answer
         if (userAnswer == expectedAnswer) {
           document.getElementById("result").innerHTML = "<p class='text-success'>Correct answer!</p>";
           sleepOneSecond();

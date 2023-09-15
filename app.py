@@ -1,6 +1,5 @@
 from flask import Flask, request, session, redirect, render_template
-import random, time
-import string
+import random, time, string
 
 app = Flask(__name__)
 app.secret_key = 'secret'
@@ -370,6 +369,13 @@ def duiweyuwl():
 def climbim(seq):
     session['page'] = f'/climbs/{seq}'
     return render_template('climbp.html', seq = seq)
+
+@app.route('/binomial')
+def binomial():
+    pascals = [1, 11, 121, 1331, 14641, 15101051, 1615201561, 172135352171, 18285670562881]
+    ans = random.choice(pascals)
+    n = pascals.index(ans)
+    return render_template('binomial.html', n = n, ans = ans)
 
 if __name__ == '__main__':
     app.run(debug=True)
