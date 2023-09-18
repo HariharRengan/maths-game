@@ -12,6 +12,7 @@
   <div style='display: none;' id='clr'>{{ session['clr'] }}</div>
   <nav class="navbar navbar-expand-lg bg-body-tertiary" id="navbar-bing">
     <div class="container-fluid">
+      <img src="{{ url_for('static', filename='favicon.png') }}" height="20" width="20" class="me-2">
       <a class="navbar-brand" href="/">Math game</a>
       <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
@@ -48,6 +49,16 @@
         <a href="/climbs/pi/1/" class="card-link">Start climb</a>
       </div>
     </div>
+
+    <div class="card-container d-flex flex-wrap justify-content-center">
+      <div class="card mx-2 mb-4" style="width: 18rem;">
+        <div class="card-body">
+          <h5 class="card-title">Prime numbers</h5>
+          <h6 class="card-subtitle mb-2 text-body-secondary">Learn the prime numbers</h6>
+          <p class="card-text">Enter as many prime numbers as you can!</p>
+          <a href="/climbs/primes/1/" class="card-link">Start climb</a>
+        </div>
+      </div>
 
   <div class="card-container d-flex flex-wrap justify-content-center">
     <div class="card mx-2 mb-4" style="width: 18rem;">
