@@ -39,10 +39,10 @@
               </li>
               <li class="nav-item d-flex">
                 <a class="nav-link active" aria-current="page" href="/binomial">Binomial</a>
-            </li>
-            <li class="nav-item d-flex">
-              <a class="nav-link active" aria-current="page" href="/percentages">Percentages</a>
-            </li>
+              </li>
+              <li class="nav-item d-flex">
+                <a class="nav-link active" aria-current="page" href="/percentages">Percentages</a>
+              </li>
             </ul>
             <li class="nav-item d-flex">
               <a class="nav-link active" aria-current="page" href="/change-theme">Change theme</a>
@@ -52,14 +52,17 @@
       </nav>
       <br>
   <div class="container">
+    <h2>Percentages of</h2>
     <div style="overflow: nowrap;">
       <h4>
-        For each number n, enter the coefficients of the expanded expression (a + b)^n. <br>Think of this as entering a single integer that represents the (n + 1)th row on Pascal's triangle.<br>
-        Enter the value for (a + b)^{{n}} (or the {{n + 1}}th row of Pascals triangle):</h4>
+        {{ a }}
+        of
+        {{ b }}
+    </h4>
       </div>
     <div class="form-group">
-      <label for="numerator">Answer:</label>
-      <input type="text" class="form-control" id="intpart" placeholder="Enter the answer">
+      <label for="numerator">Numerator:</label>
+      <input type="text" class="form-control" id="numerator" placeholder="Enter the numerator">
     </div>
     <div class="form-group">
       <button type="button" class="btn btn-primary" onclick="checkAnswer()">Check Answer</button>
@@ -76,15 +79,11 @@
 }
 
       function checkAnswer() {
-        var ans = document.getElementById("intpart").value.trim()
-        while (ans.includes(' ')) {
-          ans = ans.replace(' ', '')
-        }
-        while (ans.includes(',')) {
-          ans = ans.replace(',', '')
-        }
-        var userAnswer = parseInt(ans);
+        var userAnswer = parseInt(document.getElementById("numerator").value.trim());;
         var expectedAnswer = document.getElementById("expectedAnswer").textContent;
+        console.log(expectedAnswer, typeof(expectedAnswer), userAnswer, typeof(userAnswer))
+
+        // Checking if the user's answer matches the expected answer
         if (userAnswer == expectedAnswer) {
           document.getElementById("result").innerHTML = "<p class='text-success'>Correct answer!</p>";
           sleepOneSecond();

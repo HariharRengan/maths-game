@@ -377,5 +377,13 @@ def binomial():
     n = pascals.index(ans)
     return render_template('binomial.html', n = n, ans = ans)
 
+@app.route('/percentages')
+def percentages():
+    n = random.choice([0, 10, 20, 25, 40, 50, 75, 80, 100])
+    a = str(n) + '%'
+    b = random.choice([2 * i for i in range(100)])
+    ans = round(b * n / 100, 3)
+    return render_template('perc.html', a = a, b = b, ans = ans)
+
 if __name__ == '__main__':
     app.run(debug=True)
