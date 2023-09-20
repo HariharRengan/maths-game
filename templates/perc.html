@@ -52,12 +52,20 @@
       </nav>
       <br>
   <div class="container">
-    <h2>Percentages of</h2>
+    <h2>Percentages</h2>
     <div style="overflow: nowrap;">
       <h4>
+        {% if t =='0' %}
         {{ a }}
         of
         {{ b }}
+        <a href="/percentages/1" class="btn btn-primary">Percentage increase problems</a>
+        {% else %}
+        Increase {{ b }}
+        by
+        {{ a }}
+        <a href="/percentages/0" class="btn btn-primary">Percentage of numbers</a>
+        {% endif %}
     </h4>
       </div>
     <div class="form-group">
