@@ -383,14 +383,20 @@ def perc():
 
 @app.route('/percentages/<t>')
 def percentages(t):
-    n = random.choice([0, 10, 20, 25, 40, 50, 75, 80, 100])
+    n = random.choice([10, 20, 25, 40, 50, 75, 80] + [5 * i for i in range(1, 19)])
     a = str(n) + '%'
     b = random.choice([2 * i for i in range(100)])
+    word = ''
     if t != '0':
-        ans = b + round(b * n / 100, 3)
+        if random.choice([0, 1]):
+            ans = b + round(b * n / 100, 3)
+            word = 'Increase'
+        else:
+            ans = b - round(b * n / 100, 3)
+            word = 'Decrease'
     else:
         ans = round(b * n / 100, 3)
-    return render_template('perc.html', a = a, b = b, ans = ans, t = t)
+    return render_template('perc.html', a = a, b = b, ans = ans, t = t, word = word)
 
 if __name__ == '__main__':
     app.run(debug=True)
