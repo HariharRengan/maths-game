@@ -1,5 +1,6 @@
 from flask import Flask, request, session, redirect, render_template
 import random, time, string
+from mammath import HCF, LCM
 
 app = Flask(__name__)
 app.secret_key = 'secret'
@@ -61,7 +62,7 @@ def parse(expression, var='n'):
     return expression
 
 def mfrac(n):
-    return [n[0] % n[1], n[1], int(n[0]/n[1])]
+    return [n[0] % n[1], n[1], n[0]//n[1]]
 
 def trim(s):
     s = s.replace('e', '')
@@ -289,13 +290,17 @@ def pracfrac():
 @app.route('/practice/<dif>')
 def fractions(dif):
     session['page'] = f'/practice/{dif}'
-    a = [1, 2, 3, 4, 5, 6, 8, 9, 10, 12, 15, 20, 25]
+    a = [2, 3, 4, 5, 6, 8, 9, 10, 12, 15, 20, 25]
     print(a)
     if dif == '1':
         print(1)
         a += [7, 11, 13, 14, 16, 17, 18 , 19]
     a = [random.randint(1, 20), random.choice(a)]
     b = [random.randint(1, 20), random.choice(a)]
+    while not a[1] % a[0]:
+        a[0] = random.randint(1, 20)
+    while not b[1] % b[0]:
+        b[0] = random.randint(1, 20)
     op = random.choice(['Multiplication', 'Division', 'Addition', 'Subtraction'])
     print(op)
     if op == 'Multiplication':
@@ -313,16 +318,20 @@ def fractions(dif):
 @app.route('/mixed/<dif>')
 def mixedfrac(dif):
     session['page'] = f'/mixed/{dif}'
-    a = [1, 2, 3, 4, 5, 6, 8, 9, 10, 12, 15, 20, 25]
+    a = [2, 3, 4, 5, 6, 8, 9, 10, 12, 15, 20, 25]
     print(a)
     if dif == '1':
         print(1)
         a += [7, 11, 13, 14, 16, 17, 18 , 19]
     a = [random.randint(1, 20), random.choice(a)]
     b = [random.randint(1, 20), random.choice(a)]
-    if not mfrac(a)[0]:
+    while not a[1] % a[0]:
+        a[0] = random.randint(1, 20)
+    while not b[1] % b[0]:
+        b[0] = random.randint(1, 20)
+    while not int(mfrac(a)[0]):
         a[0] += 1
-    if not mfrac(b)[0]:
+    while not int(mfrac(b)[0]):
         b[0] += 1
     op = random.choice(['Multiplication', 'Division', 'Addition', 'Subtraction'])
     print(op)
@@ -397,6 +406,19 @@ def percentages(t):
     else:
         ans = round(b * n / 100, 3)
     return render_template('perc.html', a = a, b = b, ans = ans, t = t, word = word)
+
+@app.route('/hcf-lcm')
+def hcflcm():
+    mode = random.choice(['HCF', 'LCM'])
+    a = random.randint(1, 10)
+    x = random.randint(2, 8)
+    b = a * random.choice([i for i in range(2, 7) if ( i % x != 0) and (x % i != 0)])
+    a, b = a * x, b * random.choice([i for i in range(2, 9) if (i % x != 0) and (x % i != 0)])
+    if mode == 'HCF':
+        ans = HCF(a, b)
+    else:
+        ans = LCM(a, b)
+    return render_template('hcf-lcm.html', a= a, b = b, ans = ans, mode = mode)
 
 if __name__ == '__main__':
     app.run(debug=True)
