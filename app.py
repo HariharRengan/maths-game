@@ -418,7 +418,18 @@ def hcflcm():
         ans = HCF(a, b)
     else:
         ans = LCM(a, b)
-    return render_template('hcf-lcm.html', a= a, b = b, ans = ans, mode = mode)
+    return render_template('hcf-lcm.html', a = a, b = b, ans = ans, mode = mode)
+
+@app.route('/index-laws')
+def indlaws():
+    op = random.choice(['÷', 'x'])
+    a = random.randint(-10, 20)
+    b = random.randint(-10, 20)
+    if op == '÷':
+        ans = a - b
+    else:
+        ans = a + b
+    return render_template('indexlaw.html', a = a, b = b, ans = ans, op = op)
 
 if __name__ == '__main__':
     app.run(debug=True)

@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Fraction {{ op }}</title>
+  <title>Index laws</title>
   <link rel="icon" href="{{ url_for('static', filename='favicon.png') }}">
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css">
@@ -46,6 +46,9 @@
               <li class="nav-item d-flex">
                 <a class="nav-link active" aria-current="page" href="/hcf-lcm">HCF and LCM</a>
               </li>
+              <li class="nav-item d-flex">
+                <a class="nav-link active" aria-current="page" href="/index-laws">Index laws</a>
+              </li>
             </ul>
             <li class="nav-item d-flex">
               <a class="nav-link active" aria-current="page" href="/change-theme">Change theme</a>
@@ -58,12 +61,12 @@
     <h2>Index Laws</h2>
     <div style="overflow: nowrap;">
       <h4>
-        Simplify {{a}}<sup>{{A}}</sup> {{op}} {{b}}<sup>{{B}}</sup>
+        Simplify 𝑥<sup>{{a}}</sup> {{op}} 𝑥<sup>{{b}}</sup>
     </h4>
       </div>
     <div class="form-group">
-      <label for="numerator">Answer:</label>
-      <input type="text" class="form-control" id="numerator" placeholder="Enter the Answer">
+      <label for="numerator">𝑥's final and simplified index:</label>
+      <input type="text" class="form-control" id="numerator" placeholder="𝑥's final index">
     </div>
     <div class="form-group">
       <button type="button" class="btn btn-primary" onclick="checkAnswer()">Check Answer</button>
