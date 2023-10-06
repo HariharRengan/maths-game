@@ -58,7 +58,7 @@
       </nav>
       <br>
   <div class="container">
-    <h2>Index Laws</h2>
+    <h2>Index Laws{% if diff == '0' %}<a href="/index-laws/1" class="btn btn-danger mx-2">Difficult indicies</a>{% else %}<a href="/index-laws/0" class="btn btn-success mx-2">Easier indicies</a>{% endif %}</h2>
     <div style="overflow: nowrap;">
       <h4>
         Simplify 𝑥<sup>{{a}}</sup> {{op}} 𝑥<sup>{{b}}</sup>
@@ -83,8 +83,10 @@
 }
 
       function checkAnswer() {
-        var userAnswer = parseInt(document.getElementById("numerator").value.trim());;
-        var expectedAnswer = document.getElementById("expectedAnswer").textContent;
+        var userAnswer = eval(document.getElementById("numerator").value.trim()).toFixed(3);
+        console.log(userAnswer)
+        console.log(expectedAnswer)
+        var expectedAnswer = parseFloat(document.getElementById("expectedAnswer").textContent).toFixed(3);
         console.log(expectedAnswer, typeof(expectedAnswer), userAnswer, typeof(userAnswer))
 
         // Checking if the user's answer matches the expected answer

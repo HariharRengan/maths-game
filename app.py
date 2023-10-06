@@ -381,6 +381,7 @@ def climbim(seq):
 
 @app.route('/binomial')
 def binomial():
+    session['page'] = '/binomial'
     pascals = [1, 11, 121, 1331, 14641, 15101051, 1615201561, 172135352171, 18285670562881]
     ans = random.choice(pascals)
     n = pascals.index(ans)
@@ -388,10 +389,12 @@ def binomial():
 
 @app.route('/percentages')
 def perc():
+    session['page'] = '/percentages'
     return redirect('/percentages/0')
 
 @app.route('/percentages/<t>')
 def percentages(t):
+    session['page'] = f'/percentages/{t}'
     n = random.choice([10, 20, 25, 40, 50, 75, 80] + [5 * i for i in range(1, 19)])
     a = str(n) + '%'
     b = random.choice([2 * i for i in range(100)])
@@ -409,6 +412,7 @@ def percentages(t):
 
 @app.route('/hcf-lcm')
 def hcflcm():
+    session['page'] = '/hcf-lcm'
     mode = random.choice(['HCF', 'LCM'])
     a = random.randint(1, 10)
     x = random.randint(2, 8)
@@ -421,15 +425,25 @@ def hcflcm():
     return render_template('hcf-lcm.html', a = a, b = b, ans = ans, mode = mode)
 
 @app.route('/index-laws')
-def indlaws():
+def indexm():
+    session['page'] = '/index-laws'
+    return redirect('/index-laws/0')
+    
+@app.route('/index-laws/<diff>')
+def indlaws(diff):
+    session['page'] = f'/index-laws/{diff}'
     op = random.choice(['÷', 'x'])
     a = random.randint(-10, 20)
     b = random.randint(-10, 20)
-    if op == '÷':
-        ans = a - b
+    if not int(diff) or random.choice([0, 1]):
+        if op == '÷':
+            ans = a - b
+        else:
+            ans = a + b
     else:
-        ans = a + b
-    return render_template('indexlaw.html', a = a, b = b, ans = ans, op = op)
+        ans = round(((a * b) + 1) / a if op != '÷' else (1 - (a * b)) / a, 3)
+        a = '1 ÷ ' + str(a)
+    return render_template('indexlaw.html', a = a, b = b, ans = ans, op = op, diff = diff)
 
 if __name__ == '__main__':
     app.run(debug=True)
