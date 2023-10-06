@@ -432,18 +432,27 @@ def indexm():
 @app.route('/index-laws/<diff>')
 def indlaws(diff):
     session['page'] = f'/index-laws/{diff}'
-    op = random.choice(['÷', 'x'])
-    a = random.randint(-10, 20)
-    b = random.randint(-10, 20)
-    if not int(diff) or random.choice([0, 1]):
-        if op == '÷':
-            ans = a - b
-        else:
-            ans = a + b
+    x = random.randint(1, 100)
+    if x < 5:
+        a = 0
+        ans = 1
+        d = True
+        op = ''
+        b = ''
     else:
-        ans = round(((a * b) + 1) / a if op != '÷' else (1 - (a * b)) / a, 3)
-        a = '1 ÷ ' + str(a)
-    return render_template('indexlaw.html', a = a, b = b, ans = ans, op = op, diff = diff)
+        op = random.choice(['÷', 'x'])
+        a = random.randint(-10, 20)
+        b = random.randint(-10, 20)
+        if not int(diff) or random.choice([0, 1]):
+            if op == '÷':
+                ans = a - b
+            else:
+                ans = a + b
+        else:
+            ans = round(((a * b) + 1) / a if op != '÷' else (1 - (a * b)) / a, 3)
+            a = '1 ÷ ' + str(a)
+        d = False
+    return render_template('indexlaw.html', a = a, b = b, ans = ans, op = op, diff = diff, d = d)
 
 if __name__ == '__main__':
     app.run(debug=True)
