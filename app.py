@@ -5,6 +5,38 @@ from mammath import HCF, LCM
 app = Flask(__name__)
 app.secret_key = 'secret'
 
+questions = [
+    "5 + 2 * 3",
+    "(5 + 2) * 3",
+    "10 - 4 / 2",
+    "(10 - 4) / 2",
+    "8 / 2 * (2 + 2)",
+    "7 + 3 * 2",
+    "(7 + 3) * 2",
+    "20 - 5 / 5",
+    "(20 - 5) / 5",
+    "9 / 3 * (1 + 1)",
+    "6 + 4 * 2",
+    "(6 + 4) * 2",
+    "15 - 3 / 3",
+    "(15 - 3) / 3",
+    "12 / 4 * (3 + 3)",
+    "4 + 1 * 5",
+    "(4 + 1) * 5",
+    "25 - 5 / 5",
+    "(25 - 5) / 5",
+    "16 / 8 * (4 + 4)",
+    "3 + 7 * 6",
+    "(3 + 7) * 6",
+    "30 - 10 / 10",
+    "(30 - 10) / 10",
+    "18 / 9 *(9 + 9)",
+    "20 - 8 / 4",
+    "(20 - 8) / 4",
+    "24 / 6 * (7 + 7)"
+]
+
+
 def sieve_of_atkin(limit):
     # 2 and 3 are prime numbers
     if limit > 2:
@@ -85,7 +117,7 @@ def home():
     try:
         session['clr']
     except:
-        session['clr'] = 1
+        session['clr'] = 0
     return render_template('settings.html', session = session, int = int)
 
 @app.route('/game', methods=['POST'])
@@ -453,6 +485,12 @@ def indlaws(diff):
             a = '1 ÷ ' + str(a)
         d = False
     return render_template('indexlaw.html', a = a, b = b, ans = ans, op = op, diff = diff, d = d)
+
+@app.route('/bidmas')
+def bmas():
+    q = random.choice(questions)
+    ans = int(eval(q))
+    return render_template('bidmas.html', q = q.replace('*', 'x'), ans = ans)
 
 if __name__ == '__main__':
     app.run(debug=True)

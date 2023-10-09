@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Binomial</title>
+  <title>BIDMAS</title>
   <link rel="icon" href="{{ url_for('static', filename='favicon.png') }}">
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css">
@@ -39,19 +39,19 @@
               </li>
               <li class="nav-item d-flex">
                 <a class="nav-link active" aria-current="page" href="/binomial">Binomial</a>
-            </li>
-            <li class="nav-item d-flex">
-              <a class="nav-link active" aria-current="page" href="/percentages">Percentages</a>
-            </li>
-            <li class="nav-item d-flex">
-              <a class="nav-link active" aria-current="page" href="/hcf-lcm">HCF and LCM</a>
-            </li>
-            <li class="nav-item d-flex">
-              <a class="nav-link active" aria-current="page" href="/index-laws">Index laws</a>
-            </li>
-            <li class="nav-item d-flex">
-              <a class="nav-link active" aria-current="page" href="/bidmas">BIDMAS</a>
-            </li>
+              </li>
+              <li class="nav-item d-flex">
+                <a class="nav-link active" aria-current="page" href="/percentages">Percentages</a>
+              </li>
+              <li class="nav-item d-flex">
+                <a class="nav-link active" aria-current="page" href="/hcf-lcm">HCF and LCM</a>
+              </li>
+              <li class="nav-item d-flex">
+                <a class="nav-link active" aria-current="page" href="/index-laws">Index laws</a>
+              </li>
+              <li class="nav-item d-flex">
+                <a class="nav-link active" aria-current="page" href="/bidmas">BIDMAS</a>
+              </li>
             </ul>
             <li class="nav-item d-flex">
               <a class="nav-link active" aria-current="page" href="/change-theme">Change theme</a>
@@ -61,14 +61,15 @@
       </nav>
       <br>
   <div class="container">
+    <h2>BIDMAS Questions</h2>
     <div style="overflow: nowrap;">
       <h4>
-        For each number n, enter the coefficients of the expanded expression (a + b)<sup>n</sup>. <br>Think of this as entering a single integer that represents the (n + 1)<sup>th</sup> row on Pascal's triangle.<br>
-        Enter the value for (a + b)<sup>{{n}}</sup> (or the {{n + 1}}th row of Pascals triangle):</h4>
+        Evaluate {{q}}
+    </h4>
       </div>
     <div class="form-group">
-      <label for="numerator">Answer:</label>
-      <input type="text" class="form-control" id="intpart" placeholder="Enter the answer">
+      <label for="numerator">Enter your answer:</label>
+      <input type="text" class="form-control" id="numerator" placeholder="Enter the answer">
     </div>
     <div class="form-group">
       <button type="button" class="btn btn-primary" onclick="checkAnswer()">Check Answer</button>
@@ -85,15 +86,13 @@
 }
 
       function checkAnswer() {
-        var ans = document.getElementById("intpart").value.trim()
-        while (ans.includes(' ')) {
-          ans = ans.replace(' ', '')
-        }
-        while (ans.includes(',')) {
-          ans = ans.replace(',', '')
-        }
-        var userAnswer = parseInt(ans);
-        var expectedAnswer = document.getElementById("expectedAnswer").textContent;
+        var userAnswer = eval(document.getElementById("numerator").value.trim()).toFixed(3);
+        console.log(userAnswer)
+        console.log(expectedAnswer)
+        var expectedAnswer = parseFloat(document.getElementById("expectedAnswer").textContent).toFixed(3);
+        console.log(expectedAnswer, typeof(expectedAnswer), userAnswer, typeof(userAnswer))
+
+        // Checking if the user's answer matches the expected answer
         if (userAnswer == expectedAnswer) {
           document.getElementById("result").innerHTML = "<p class='text-success'>Correct answer!</p>";
           sleepOneSecond();
