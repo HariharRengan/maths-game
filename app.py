@@ -490,7 +490,7 @@ def indlaws(diff):
 def bmas():
     q = random.choice(questions)
     ans = int(eval(q))
-    return render_template('bidmas.html', q = q.replace('*', 'x'), ans = ans)
+    return render_template('bidmas.html', q = q.replace('*', 'x').replace('/', '÷'), ans = ans)
 
 if __name__ == '__main__':
     app.run(debug=True)
