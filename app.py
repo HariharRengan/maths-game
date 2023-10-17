@@ -504,7 +504,7 @@ def indlaws(diff):
                 ans = a + b
         else:
             ans = round(((a * b) + 1) / a if op != '÷' else (1 - (a * b)) / a, 3)
-            a = '1 ÷ ' + str(a)
+            a = '1 / ' + str(a)
         d = False
     return render_template('indexlaw.html', a = a, b = b, ans = ans, op = op, diff = diff, d = d)
 
