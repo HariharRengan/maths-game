@@ -322,13 +322,15 @@ def pracfrac():
 @app.route('/practice/<dif>')
 def fractions(dif):
     session['page'] = f'/practice/{dif}'
-    a = [2, 3, 4, 5, 6, 8, 9, 10, 12, 15, 20, 25]
-    print(a)
+    lis = [2, 3, 4, 5, 6, 8, 9, 10, 12, 15, 20, 25]
     if dif == '1':
         print(1)
         a += [7, 11, 13, 14, 16, 17, 18 , 19]
-    a = [random.randint(1, 20), random.choice(a)]
-    b = [random.randint(1, 20), random.choice(a)]
+    idx = random.randint(0, len(lis) - 1)
+    a = [random.randint(1, 20), lis[idx]]
+    random.shuffle(lis)
+    print(a)
+    b = [random.randint(1, 20), lis[idx]]
     while not a[1] % a[0]:
         a[0] = random.randint(1, 20)
     while not b[1] % b[0]:
@@ -350,13 +352,17 @@ def fractions(dif):
 @app.route('/mixed/<dif>')
 def mixedfrac(dif):
     session['page'] = f'/mixed/{dif}'
-    a = [2, 3, 4, 5, 6, 8, 9, 10, 12, 15, 20, 25]
-    print(a)
+    lis = [2, 3, 4, 5, 6, 8, 9, 10, 12, 15, 20, 25]
     if dif == '1':
         print(1)
         a += [7, 11, 13, 14, 16, 17, 18 , 19]
-    a = [random.randint(1, 20), random.choice(a)]
-    b = [random.randint(1, 20), random.choice(a)]
+    idx = random.randint(0, len(lis) - 1)
+    a = [random.randint(1, 20), lis[idx]]
+    random.shuffle(lis)
+    print(a)
+    b = [random.randint(1, 20), lis[idx]]
+    if b[0] / b[1] > a[0] / a[1]:
+        a, b = b, a
     while not a[1] % a[0]:
         a[0] = random.randint(1, 20)
     while not b[1] % b[0]:
