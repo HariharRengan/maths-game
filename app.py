@@ -418,12 +418,19 @@ def climbim(seq):
     return render_template('climbp.html', seq = seq)
 
 @app.route('/binomial')
-def binomial():
+def bmid():
+    return redirect('/binomial/0')
+
+@app.route('/binomial/<dif>')
+def binomial(dif):
     session['page'] = '/binomial'
-    pascals = [1, 11, 121, 1331, 14641, 15101051, 1615201561, 172135352171, 18285670562881]
-    ans = random.choice(pascals)
+    m = 1 if not int(dif) else random.choice([1, 1, 1, -1]) * random.randint(1, 4)
+    pascals = ['1', '11', '121', '1331', '14641', '15101051', '1615201561', '172135352171', '18285670562881']
+    pascals = [''.join([str(int(j) * m ** k) for k, j in enumerate(i)]) for i in pascals]
+    ans = random.choice(pascals[:5 if int(dif) else 9])
     n = pascals.index(ans)
-    return render_template('binomial.html', n = n, ans = ans)
+    print(ans)
+    return render_template('binomial.html', n = n, ans = ans, m = m, int = int, dif = dif)
 
 @app.route('/percentages')
 def perc():
