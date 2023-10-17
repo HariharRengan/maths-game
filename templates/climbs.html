@@ -53,58 +53,57 @@
   <br>
 
   <div class="card-container d-flex flex-wrap justify-content-center">
-    <div class="card mx-2 mb-4" style="width: 18rem;">
+    <div class="card mx-2 mb-4" style="width: 15rem;">
       <div class="card-body">
+        <img src="{{ url_for('static', filename='pi.jpeg') }}" class="card-img-top" alt="...">
         <h5 class="card-title">The digits of Pi</h5>
         <h6 class="card-subtitle mb-2 text-body-secondary">Climb the digits of Pi</h6>
-        <p class="card-text">Enter the digits of pi up to 1 million. Starts after the decimal point.</p>
+        <p class="card-text">Enter the digits of pi up to 1 million. Starts after the decimal point. <b>Current record: {{session['climbs'].get('pi', 0)}}</b></p>
         <a href="/climbs/pi/1/" class="card-link">Start climb</a>
       </div>
     </div>
-
-    <div class="card-container d-flex flex-wrap justify-content-center">
-      <div class="card mx-2 mb-4" style="width: 18rem;">
+      <div class="card mx-2 mb-4" style="width: 15rem;">
         <div class="card-body">
+          <img src="{{ url_for('static', filename='primes.png') }}" class="card-img-top" alt="...">
           <h5 class="card-title">Prime numbers</h5>
           <h6 class="card-subtitle mb-2 text-body-secondary">Learn the prime numbers</h6>
-          <p class="card-text">Enter as many prime numbers as you can!</p>
+          <p class="card-text">Enter as many prime numbers as you can! <b>Current record: {{session['climbs'].get('primes', 0)}}</b></p>
           <a href="/climbs/primes/1/" class="card-link">Start climb</a>
         </div>
       </div>
-
-  <div class="card-container d-flex flex-wrap justify-content-center">
-    <div class="card mx-2 mb-4" style="width: 18rem;">
+    <div class="card mx-2 mb-4" style="width: 15rem;">
       <div class="card-body">
+        <img src="{{ url_for('static', filename='spiral.png') }}" class="card-img-top" alt="...">
         <h5 class="card-title">Fibonacci sequence</h5>
         <h6 class="card-subtitle mb-2 text-body-secondary">Climb the fibonacci</h6>
-        <p class="card-text">A sequence where the previous two terms sum to make the current term. Try not to rely on addition!</p>
+        <p class="card-text">A sequence where the previous two terms sum to make the current term. Try not to rely on addition! <b>Current record: {{session['climbs'].get('fibonacci', 0)}}</b></p>
         <a href="/climbs/fibonacci/1/" class="card-link">Start climb</a>
       </div>
     </div>
-  
-    <div class="card mx-2 mb-4" style="width: 18rem;">
+    <div class="card mx-2 mb-4" style="width: 15rem;">
       <div class="card-body">
+        <img src="{{ url_for('static', filename='sqnums.gif') }}" class="card-img-top" alt="...">
         <h5 class="card-title">Square numbers</h5>
         <h6 class="card-subtitle mb-2 text-body-secondary">Climb square numbers</h6>
-        <p class="card-text">A sequence where the term is the term number squared, making a square with the numbers.</p>
+        <p class="card-text">A sequence where the term is the term number squared, making a square with the numbers. <b>Current record: {{session['climbs'].get('n**2', 0)}}</b></p>
         <a href="/climbs/n**2" class="card-link">Start climb</a>
       </div>
     </div>
-
-    <div class="card mx-2 mb-4" style="width: 18rem;">
+    <div class="card mx-2 mb-4" style="width: 15rem;">
       <div class="card-body">
+        <img src="{{ url_for('static', filename='cubenums.png') }}" class="card-img-top" alt="...">
         <h5 class="card-title">Cube numbers</h5>
         <h6 class="card-subtitle mb-2 text-body-secondary">Climb cube numbers</h6>
-        <p class="card-text">A sequence where the term is the term number cubed, making a cube with the numbers.</p>
+        <p class="card-text">A sequence where the term is the term number cubed, making a cube with the numbers. <b>Current record: {{session['climbs'].get('n**3', 0)}}</b></p>
         <a href="/climbs/n**3" class="card-link">Start climb</a>
       </div>
     </div>
-  
-    <div class="card mx-2 mb-4" style="width: 18rem;">
+    <div class="card mx-2 mb-4" style="width: 15rem;">
       <div class="card-body">
+        <img src="{{ url_for('static', filename='triangular-numbers.jpg') }}" class="card-img-top" alt="...">
         <h5 class="card-title">Triangle numbers</h5>
         <h6 class="card-subtitle mb-2 text-body-secondary">Climb triangle numbers</h6>
-        <p class="card-text">A sequence where each term, if each term was represented as dots, would make a triangle</p>
+        <p class="card-text">A sequence where each term, if each term was represented as dots, would make a triangle. <b>Current record: {{session['climbs'].get('0.5*n*(n+1)', 0)}}</b></p>
         <a href="/climbs/0.5*n*(n+1)" class="card-link">Start climb</a>
       </div>
     </div>

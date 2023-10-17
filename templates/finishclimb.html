@@ -102,7 +102,13 @@
 {% if tn < 11 and tn > 1%}</h1>
 <h1 class="heading animate-fade">Keep trying!</h1>
 {% endif %}
-<div id="bing" class="animate-number">You got {{ tn - 1 }} on the {{ sequence }} climb!</div>
+{% if seq == 'pi' %}
+<div id="bing" class="animate-number">You got {{ tn - 1 }} digits of Pi!</div>
+{% elif seq == 'primes' %}
+<div id="bing" class="animate-number">You got the first {{ tn - 1 }} primes!</div>
+{% else %}
+<div id="bing" class="animate-number">You got {{ tn - 1 }} on the {{ seq }} climb!</div>
+{% endif %}
 <!-- <footer class="footer bg-light">
   <div class="container">
     <div class="row">

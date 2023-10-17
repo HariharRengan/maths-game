@@ -1,6 +1,7 @@
 from flask import Flask, request, session, redirect, render_template
 import random, time, string
 from mammath import HCF, LCM
+import math
 
 app = Flask(__name__)
 app.secret_key = 'secret'
@@ -110,6 +111,11 @@ def fracans(raw):
             raw[0] /= i
             raw[1] /= i
     return int(raw[0]), int(raw[1])
+
+def binet(n):
+    phi = (1 + math.sqrt(5)) / 2
+    fib_n = (phi ** n - (1 - phi) ** n) / math.sqrt(5)
+    return round(fib_n)
 
 @app.route('/')
 def home():
@@ -260,17 +266,23 @@ def bing():
 
 @app.route('/climbs/<sequence>/<tn>/finish')
 def bingbongbing(sequence, tn):
+    session['anss'] = []
     session['page'] = f'/climbs/{sequence}/{tn}/finish'
     seqdict = {'n**2' : 'Square numbers', '0.5*n*(n+1)' : 'Triangle numbers', 'n**3':'Cube numbers'}
+    session['climbs'][sequence] = max(int(tn) - 1, session['climbs'].get(sequence, 0))
     try:
         sequence = seqdict[sequence]
     except:
         pass
-    return render_template('finishclimb.html', tn = int(tn), sequence = sequence)
+    return render_template('finishclimb.html', tn = int(tn), seq = sequence)
 
 @app.route('/climbs', strict_slashes=False)
 def climbs():
     session['page'] = '/climbs'
+    try:
+        session['climbs']
+    except:
+        session['climbs'] = {}
     return render_template('climbs.html')
 
 @app.route('/climbs/<sequence>/<tn>/', methods=['GET', 'POST'])
@@ -291,19 +303,16 @@ def climb2(sequence, tn):
             session['ans'] = prime_array[int(tn) - 1]
             return render_template('climmisc.html', url=f'/climbs/{sequence}/{tn}', tn=tn)
         if sequence == 'fibonacci':
-            if int(tn) - 1:
-                session['ans'] = [session['ans'][1], sum(session['ans'])]
-            else:
-                session['ans'] = [0, 1]
-            return render_template('climbp.html', url=f'/climbs/{sequence}/{tn}', tn=tn)
+            session['ans'] = binet(int(tn))
+            return render_template('climmisc.html', url=f'/climbs/{sequence}/{tn}', tn=tn)
         session['ans'] = eval(sequence.replace('n', tn))
         return render_template('climmisc.html', url=f'/climbs/{sequence}/{tn}', tn=tn)
     else:
         uans = int(request.form['ans'])
         print(str(uans), session['ans'], uans == session['ans'])
         if sequence == 'fibonacci':
-            if uans != session['ans'][1]:
-                return redirect(f'/climbs/{sequence}/{int(tn)}/finish')
+            if uans != session['ans']:
+                return redirect(f'/climbs/fibonacci/{tn}/finish')
             else:
                 x = str(int(tn) + 1)
                 session['anss'] += [request.form['ans']]
