@@ -22,7 +22,7 @@
     <nav class="navbar navbar-expand-lg bg-body-tertiary" id="navbar-bing">
         <div class="container-fluid">
           <img src="{{ url_for('static', filename='favicon.png') }}" height="20" width="20" class="me-2">
-          <a class="navbar-brand" href="/">Math game</a>
+          <a class="navbar-brand" href="/">Quick arithmetic</a>
           <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
           </button>
@@ -63,9 +63,9 @@
   <div class="container">
     <h2>Fraction {{ op }}</h2>
     {% if int(dif) %}
-      <a class="nav-link active" class='btn btn-danger' aria-current="page" href="/practice/0"><button type="button" class="btn btn-success">Easy</button></a>
+      <a class="nav-link active" class='btn btn-danger' aria-current="page" href="/practice/0"><button type="button" class="btn btn-success">Change to Easy</button></a>
     {% else %}
-      <a class="nav-link active" class='btn btn-danger' aria-current="page" href="/practice/1"><button type="button" class="btn btn-danger">Difficult</button></a>
+      <a class="nav-link active" class='btn btn-danger' aria-current="page" href="/practice/1"><button type="button" class="btn btn-danger">Change to Difficult</button></a>
     {% endif %}
     <div class="row">
       <div class="col-md-6">

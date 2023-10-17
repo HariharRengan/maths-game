@@ -429,7 +429,7 @@ def percentages(t):
     session['page'] = f'/percentages/{t}'
     n = random.choice([10, 20, 25, 40, 50, 75, 80] + [5 * i for i in range(1, 19)])
     a = str(n) + '%'
-    b = random.choice([2 * i for i in range(100)])
+    b = random.choice([2 * i for i in range(1, 100)])
     word = ''
     if t != '0':
         if random.choice([0, 1]):
