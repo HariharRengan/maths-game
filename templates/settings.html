@@ -24,6 +24,14 @@
       background-color: #333;
       color: #f0f0f0;
     }
+    .form-control {
+      width: 32vw;
+      display: inline-block;
+    }
+    footer {
+      position: fixed;
+      bottom: 0;
+    }
   </style>
 </head>
 <body>
@@ -70,106 +78,76 @@
   </nav>
   <div class="container">
   <h1>Math Game Settings</h1>
+  Suggested Settings:
   <div class="btn-group" role="group" aria-label="Basic example">
-    <button type="button" class="btn btn-primary" onclick="lschool()">Lower school / Y9 and less</button>
-    <button type="button" class="btn btn-primary" onclick="mschool()">Middle school / Y10 & 11</button>
-    <button type="button" class="btn btn-primary" onclick="hschool()">High school / Sixth form</button>
+    <button type="button" class="btn btn-primary" onclick="lschool()">KS3</button>
+    <button type="button" class="btn btn-primary" onclick="mschool()">KS4</button>
+    <button type="button" class="btn btn-primary" onclick="hschool()">KS5</button>
   </div>
   <hr>
   <form method="POST" action="/game">
     <div class="form-group">
-      <label for="includeIntegers">Include Integers</label>
-      <input type="checkbox" id="includeIntegers" name="includeIntegers">
-    </div>
-    <div class="form-group">
-      <label for="includeIntegers">Include negatives</label>
+      <label for="includeNegatives">Include Negatives</label>
       <input type="checkbox" id="includeNegatives" name="includeNegatives">
     </div>
+    
     <div class="form-group">
       <label for="includeDecimals">Include Decimals</label>
       <input type="checkbox" id="includeDecimals" name="includeDecimals" onchange="toggleDecimals(this)">
-    </div>
-    <div class="form-group">
-      <label for="decimalPlaces">Number of Decimal Places (if decimals are included)</label>
       <input type="number" id="decimalPlaces" name="decimalPlaces" min="0" class="form-control disabled" disabled>
     </div>
+    
     <hr>
+    
     <div class="form-group">
       <label for="includeAddition">Include Addition</label>
       <input type="checkbox" id="includeAddition" name="includeAddition" onchange="toggleAddition(this)">
+      <input type="number" id="additionBounds1" name="additionBounds1" class="form-control" placeholder="Upper bound 1">
+      <input type="number" id="additionBounds2" name="additionBounds2" class="form-control" placeholder="Upper bound 2">
     </div>
-    <div class="form-group row">
-      <label for="additionBounds" class="col-sm-2 col-form-label">Addition Bounds</label>
-      <div class="col-sm-5">
-        <input type="number" id="additionBounds1" name="additionBounds1" class="form-control" placeholder="Upper bound for the first number">
-      </div>
-      <div class="col-sm-5">
-        <input type="number" id="additionBounds2" name="additionBounds2" class="form-control" placeholder="Upper bound for the second number">
-      </div>
-    </div>
+    
     <hr>
+    
     <div class="form-group">
       <label for="includeSubtraction">Include Subtraction</label>
       <input type="checkbox" id="includeSubtraction" name="includeSubtraction" onchange="toggleSubtraction(this)">
+      <input type="number" id="subtractionBounds1" name="subtractionBounds1" class="form-control" placeholder="Upper bound 1">
+      <input type="number" id="subtractionBounds2" name="subtractionBounds2" class="form-control" placeholder="Upper bound 2">
     </div>
-    <div class="form-group row">
-      <label for="subtractionBounds" class="col-sm-2 col-form-label">Subtraction Bounds</label>
-      <div class="col-sm-5">
-        <input type="number" id="subtractionBounds1" name="subtractionBounds1" class="form-control" placeholder="Upper bound for the first number">
-      </div>
-      <div class="col-sm-5">
-        <input type="number" id="subtractionBounds2" name="subtractionBounds2" class="form-control" placeholder="Upper bound for the second number">
-      </div>
-    </div>
+    
     <hr>
+    
     <div class="form-group">
       <label for="includeMultiplication">Include Multiplication</label>
       <input type="checkbox" id="includeMultiplication" name="includeMultiplication" onchange="toggleMultiplication(this)">
+      <input type="number" id="multiplicationBounds1" name="multiplicationBounds1" class="form-control" placeholder="Lower Bound">
+      <input type="number" id="multiplicationBounds2" name="multiplicationBounds2" class="form-control" placeholder="Upper Bound">
     </div>
-    <div class="form-group row">
-      <label for="multiplicationBounds" class="col-sm-2 col-form-label">Multiplication Bounds</label>
-      <div class="col-sm-5">
-        <input type="number" id="multiplicationBounds1" name="multiplicationBounds1" class="form-control" placeholder="Lower Bound">
-      </div>
-      <div class="col-sm-5">
-        <input type="number" id="multiplicationBounds2" name="multiplicationBounds2" class="form-control" placeholder="Upper Bound">
-      </div>
-    </div>
+    
     <hr>
+    
     <div class="form-group">
       <label for="includeDivision">Include Division</label>
       <input type="checkbox" id="includeDivision" name="includeDivision" onchange="toggleDivision(this)">
+      <input type="number" id="divisionBounds1" name="divisionBounds1" class="form-control" placeholder="Upper bound (divisor)">
+      <input type="number" id="divisionBounds2" name="divisionBounds2" class="form-control" placeholder="Upper bound (answer)">
     </div>
-    <div class="form-group row">
-      <label for="divisionBounds" class="col-sm-2 col-form-label">Division Bounds</label>
-      <div class="col-sm-5">
-        <input type="number" id="divisionBounds1" name="divisionBounds1" class="form-control" placeholder="Upper bound for the divisor number">
-      </div>
-      <div class="col-sm-5">
-        <input type="number" id="divisionBounds2" name="divisionBounds2" class="form-control" placeholder="Upper bound for the answer number">
-      </div>
-    </div>
+    
     <hr>
+    
     <div class="form-group">
       <label for="timeLimit">Time Limit (seconds)</label>
       <input type="number" id="timeLimit" name="timeLimit" min="0" class="form-control" required>
     </div>
-    <button type="submit" class="btn btn-primary" onlick="localStorage.setItem('score', 0)">Start Game</button>
+    
+    <button type="submit" class="btn btn-primary" onclick="localStorage.setItem('score', 0)">Start Game</button>
     <button type="button" class="btn btn-secondary" onclick="clearForm()">Reset Form</button>
   </form>
+    
 </div>
-<footer id="footer-code">
+<footer id="footer-code" class="container-fluid">
   <p>Coded by Harihar Rengan</p>
 </footer>
-<!-- <footer class="footer bg-light">
-  <div class="container">
-    <div class="row">
-      <div class="col text-center" style="padding-top: 5px;">
-        <p class="text-muted">Coded by Harihar Rengan</p>
-      </div>
-    </div>
-  </div>
-</footer> -->
   <script>
     function toggleDecimals(element) {
       var decimalPlacesInput = document.getElementById("decimalPlaces");
@@ -291,7 +269,6 @@
     }
     
     function clearForm() {
-      document.getElementById("includeIntegers").checked = true;
       document.getElementById("includeNegatives").checked = true;
       document.getElementById("includeDecimals").checked = false;
       document.getElementById("decimalPlaces").disabled = true;
@@ -351,7 +328,6 @@
     const responses = JSON.parse(previousResponses);
   
     // Set the values of form elements based on previous responses
-    document.getElementById('includeIntegers').checked = responses.includeIntegers;
     document.getElementById('includeNegatives').checked = responses.includeNegatives;
     document.getElementById('includeDecimals').checked = responses.includeDecimals;
     document.getElementById('decimalPlaces').value = responses.decimalPlaces;
@@ -377,7 +353,6 @@
   
     // Create an object to store the user's responses
     const responses = {
-      includeIntegers: document.getElementById('includeIntegers').checked,
       includeNegatives: document.getElementById('includeNegatives').checked,
       includeDecimals: document.getElementById('includeDecimals').checked,
       decimalPlaces: document.getElementById('decimalPlaces').value,
@@ -429,7 +404,6 @@ toggleDivision(document.getElementById('includeDivision'))
   </script>
   <script>
     function lschool() {
-      document.getElementById("includeIntegers").checked = true;
       document.getElementById("includeNegatives").checked = true;
       document.getElementById("includeDecimals").checked = false;
       document.getElementById("decimalPlaces").disabled = true;
@@ -479,12 +453,11 @@ toggleDivision(document.getElementById('includeDivision'))
   document.getElementById("timeLimit").value = '60';
     }
     function mschool() {
-      document.getElementById("includeIntegers").checked = true;
       document.getElementById("includeNegatives").checked = true;
-      document.getElementById("includeDecimals").checked = false;
-      document.getElementById("decimalPlaces").disabled = true;
-      document.getElementById("decimalPlaces").classList.add("disabled");
-      document.getElementById("decimalPlaces").value = '';
+      document.getElementById("includeDecimals").checked = true;
+      document.getElementById("decimalPlaces").disabled = false;
+      document.getElementById("decimalPlaces").classList.remove("disabled");
+      document.getElementById("decimalPlaces").value = '1';
 
   document.getElementById("includeAddition").checked = true;
   document.getElementById("additionBounds1").required = true;
@@ -529,12 +502,11 @@ toggleDivision(document.getElementById('includeDivision'))
   document.getElementById("timeLimit").value = '60';
     }
     function hschool() {
-      document.getElementById("includeIntegers").checked = true;
       document.getElementById("includeNegatives").checked = true;
-      document.getElementById("includeDecimals").checked = false;
-      document.getElementById("decimalPlaces").disabled = true;
-      document.getElementById("decimalPlaces").classList.add("disabled");
-      document.getElementById("decimalPlaces").value = '';
+      document.getElementById("includeDecimals").checked = true;
+      document.getElementById("decimalPlaces").disabled = false;
+      document.getElementById("decimalPlaces").classList.remove("disabled");
+      document.getElementById("decimalPlaces").value = '2';
 
   document.getElementById("includeAddition").checked = true;
   document.getElementById("additionBounds1").required = true;
