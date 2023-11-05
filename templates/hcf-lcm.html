@@ -16,50 +16,61 @@
             width: 100%;
         }
   </style>
+  <script src="https://unpkg.com/boxicons@2.1.4/dist/boxicons.js"></script>
 </head>
 <body>
   <div style='display: none;' id='clr'>{{ session['clr'] }}</div>
-    <nav class="navbar navbar-expand-lg bg-body-tertiary" id="navbar-bing">
-        <div class="container-fluid">
-          <img src="{{ url_for('static', filename='favicon.png') }}" height="20" width="20" class="me-2">
-          <a class="navbar-brand" href="/">Quick arithmetic</a>
-          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-          </button>
-          <div class="collapse navbar-collapse" id="navbarSupportedContent">
-            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-              <li class="nav-item">
-                <a class="nav-link active" aria-current="page" href="/climbs">Climbs</a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link active" aria-current="page" href="/practice">Fractions</a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link active" aria-current="page" href="/mixed/0">Mixed Fractions</a>
-              </li>
-              <li class="nav-item d-flex">
-                <a class="nav-link active" aria-current="page" href="/binomial">Binomial</a>
-              </li>
-              <li class="nav-item d-flex">
-                <a class="nav-link active" aria-current="page" href="/percentages">Percentages</a>
-              </li>
-              <li class="nav-item d-flex">
-                <a class="nav-link active" aria-current="page" href="/hcf-lcm">HCF and LCM</a>
-              </li>
-              <li class="nav-item d-flex">
-                <a class="nav-link active" aria-current="page" href="/index-laws">Index laws</a>
-              </li>
-              <li class="nav-item d-flex">
-                <a class="nav-link active" aria-current="page" href="/bidmas">BIDMAS</a>
-              </li>
-            </ul>
-            <li class="nav-item d-flex">
-              <a class="nav-link active" aria-current="page" href="/change-theme">Change theme</a>
-            </li>
-          </div>
+  <nav class="navbar bg-body-tertiary fixed-top" id="navbar-bing">
+    <div class="container-fluid">
+      <img src="{{ url_for('static', filename='favicon.png') }}" height="20" width="20" class="me-2">
+      <a class="navbar-brand" href="/">Arithmetic Academy</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbar" aria-controls="offcanvasNavbar" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasNavbar" aria-labelledby="offcanvasNavbarLabel">
+        <div class="offcanvas-header">
+          <h5 class="offcanvas-title" id="offcanvasNavbarLabel">Tools</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
         </div>
-      </nav>
-      <br>
+        <div class="offcanvas-body">
+          <ul class="navbar-nav justify-content-end flex-grow-1 pe-3">
+            <li class="nav-item">
+              <a class="nav-link active" aria-current="page" href="/" data-bs-toggle="tooltip" data-bs-placement="right" data-bs-title="Play Quick Arithmetic">Home</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link active" aria-current="page" href="/climbs" data-bs-toggle="tooltip" data-bs-placement="right" data-bs-title="Practice patterns and sequences here">Climbs</a>
+            </li>
+            <li class="nav-item d-flex">
+              <a class="nav-link active" aria-current="page" href="/bidmas" data-bs-toggle="tooltip" data-bs-placement="right" data-bs-title="Prectice BIDMAS and oder of operations here">BIDMAS</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link active" aria-current="page" href="/practice" data-bs-toggle="tooltip" data-bs-placement="right" data-bs-title="Practice operatiosn with fractions here">Fractions</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link active" aria-current="page" href="/mixed/0" data-bs-toggle="tooltip" data-bs-placement="right" data-bs-title="Practice operations with mixed fractions here">Mixed Fractions</a>
+            </li>
+            <li class="nav-item d-flex">
+              <a class="nav-link active" aria-current="page" href="/percentages" data-bs-toggle="tooltip" data-bs-placement="right" data-bs-title="Practice percentages of amounts and percentage changes">Percentages</a>
+            </li>
+            <li class="nav-item d-flex">
+              <a class="nav-link active" aria-current="page" href="/hcf-lcm" data-bs-toggle="tooltip" data-bs-placement="right" data-bs-title="Practice HCF/GCD anf LCM here">HCF and LCM</a>
+            </li>
+            <li class="nav-item d-flex">
+              <a class="nav-link active" aria-current="page" href="/index-laws" data-bs-toggle="tooltip" data-bs-placement="right" data-bs-title="Practice the operations with indicies here">Index laws</a>
+            </li>
+            <li class="nav-item d-flex">
+              <a class="nav-link active" aria-current="page" href="/binomial" data-bs-toggle="tooltip" data-bs-placement="right" data-bs-title="Practice binomial expansion here">Binomial expansion</a>
+            </li>
+            <hr>
+            <li class="nav-item d-flex">
+              <a class="nav-link active" aria-current="page" href="/change-theme">{% if session['clr'] %}<box-icon type='solid' name='moon'></box-icon>{% else %}<box-icon type='solid' name='sun'></box-icon>{% endif %} Change theme</a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </nav>
+  <br><br><br>
   <div class="container">
     <h2>HCF and LCM</h2>
     <div style="overflow: nowrap;">
@@ -133,5 +144,12 @@
   </footer> -->
   <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.min.js" integrity="sha384-fbbOQedDUMZZ5KreZpsbe1LCZPVmfTnH7ois6mU1QK+m14rQ1l2bGBq41eYeM/fS" crossorigin="anonymous"></script>  
+  <script>
+    // Initialize tooltips
+    var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'));
+    var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
+      return new bootstrap.Tooltip(tooltipTriggerEl);
+    });
+  </script>
 </body>
 </html>
