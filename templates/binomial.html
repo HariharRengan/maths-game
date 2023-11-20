@@ -74,7 +74,7 @@
   <div class="container">
     <div style="overflow: nowrap;">
       <h4>
-        Enter the binomial coefficients for (1 + {{ m if m - 1 else '' }}x)<sup>{{ n }}</sup>. Enter the coefficients in order of ascending powers of x, with a comma between the coefficients.
+        Enter the binomial coefficients for (1 {{ '+' if m >= 0 else '-' }} {{ abs(m) if m - 1 else '' }}x)<sup>{{ n }}</sup>. Enter the coefficients in order of ascending powers of x, with a comma between the coefficients.
       {% if int(dif) %}<a class="nav-link active" class='btn btn-danger' aria-current="page" href="/binomial/0"><button type="button" class="btn btn-success">Change to Easy</button></a>{% else %}<a class="nav-link active" class='btn btn-danger' aria-current="page" href="/binomial/1"><button type="button" class="btn btn-danger">Change to Difficult</button></a>{% endif %}</h4></div>
     <div class="form-group">
       <label for="numerator">Answer:</label>
@@ -103,6 +103,7 @@
           ans = ans.replace(',', '')
         }
         var expectedAnswer = document.getElementById("expectedAnswer").textContent;
+        console.log(expectedAnswer)
         if (ans == expectedAnswer) {
           document.getElementById("result").innerHTML = "<p class='text-success'>Correct answer!</p>";
           sleepOneSecond();

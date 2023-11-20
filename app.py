@@ -434,12 +434,12 @@ def bmid():
 def binomial(dif):
     session['page'] = '/binomial'
     m = 1 if not int(dif) else random.choice([1, 1, 1, -1]) * random.randint(1, 4)
-    pascals = ['1', '11', '121', '1331', '14641', '15101051', '1615201561', '172135352171', '18285670562881']
+    pascals = ['121', '1331', '14641', '15101051', '1615201561', '172135352171', '18285670562881']
     pascals = [''.join([str(int(j) * m ** k) for k, j in enumerate(i)]) for i in pascals]
     ans = random.choice(pascals[:5 if int(dif) else 9])
-    n = pascals.index(ans)
+    n = pascals.index(ans) + 2
     print(ans)
-    return render_template('binomial.html', n = n, ans = ans, m = m, int = int, dif = dif)
+    return render_template('binomial.html', n = n, ans = ans, m = m, int = int, dif = dif, abs = abs)
 
 @app.route('/percentages')
 def perc():
