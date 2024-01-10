@@ -266,6 +266,8 @@ def bing():
 
 @app.route('/climbs/<sequence>/<tn>/finish')
 def bingbongbing(sequence, tn):
+    lnk = session.get('page')
+    print(lnk)
     session['anss'] = []
     session['page'] = f'/climbs/{sequence}/{tn}/finish'
     seqdict = {'n**2' : 'Square numbers', '0.5*n*(n+1)' : 'Triangle numbers', 'n**3':'Cube numbers'}
@@ -274,7 +276,7 @@ def bingbongbing(sequence, tn):
         sequence = seqdict[sequence]
     except:
         pass
-    return render_template('finishclimb.html', tn = int(tn), seq = sequence)
+    return render_template('finishclimb.html', tn = int(tn), seq = sequence, lnk = lnk)
 
 @app.route('/climbs', strict_slashes=False)
 def climbs():
@@ -334,7 +336,7 @@ def fractions(dif):
     lis = [2, 3, 4, 5, 6, 8, 9, 10, 12, 15, 20, 25]
     if dif == '1':
         print(1)
-        a += [7, 11, 13, 14, 16, 17, 18 , 19]
+        lis += [7, 11, 13, 14, 16, 17, 18 , 19]
     idx = random.randint(0, len(lis) - 1)
     a = [random.randint(1, 20), lis[idx]]
     random.shuffle(lis)
@@ -344,6 +346,8 @@ def fractions(dif):
         a[0] = random.randint(1, 20)
     while not b[1] % b[0]:
         b[0] = random.randint(1, 20)
+    if a[0] / a[1] < b[0] / b[1]:
+        a, b = b, a
     op = random.choice(['Multiplication', 'Division', 'Addition', 'Subtraction'])
     print(op)
     if op == 'Multiplication':
@@ -364,7 +368,7 @@ def mixedfrac(dif):
     lis = [2, 3, 4, 5, 6, 8, 9, 10, 12, 15, 20, 25]
     if dif == '1':
         print(1)
-        a += [7, 11, 13, 14, 16, 17, 18 , 19]
+        lis += [7, 11, 13, 14, 16, 17, 18 , 19]
     idx = random.randint(0, len(lis) - 1)
     a = [random.randint(1, 20), lis[idx]]
     random.shuffle(lis)
@@ -487,7 +491,7 @@ def indexm():
 def indlaws(diff):
     session['page'] = f'/index-laws/{diff}'
     x = random.randint(1, 100)
-    if x < 5:
+    if x <= 5:
         a = 0
         ans = 1
         d = True
@@ -495,9 +499,11 @@ def indlaws(diff):
         b = ''
     else:
         op = random.choice(['÷', 'x'])
-        a = random.randint(-10, 20)
+        a = 0
+        while not a:
+            a = random.randint(-10, 20)
         b = random.randint(-10, 20)
-        if not int(diff) or random.choice([0, 1]):
+        if not int(diff) or random.choice([0, 1]) or x <= 15:
             if op == '÷':
                 ans = a - b
             else:
@@ -505,7 +511,9 @@ def indlaws(diff):
         else:
             ans = round(((a * b) + 1) / a if op != '÷' else (1 - (a * b)) / a, 3)
             a = '1 / ' + str(a)
-        d = False
+        d = False if x > 15 else 3
+        if d:
+            ans = (a * b) // 1
     return render_template('indexlaw.html', a = a, b = b, ans = ans, op = op, diff = diff, d = d)
 
 @app.route('/bidmas')
