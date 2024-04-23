@@ -1,7 +1,23 @@
 from flask import Flask, request, session, redirect, render_template
 import random, time, string
-from mammath import HCF, LCM
 import math
+
+def HCF(a, b):
+    """
+    Returns the highest common factor of a and b
+    """
+    
+    a, b = max(a, b), min(a, b)
+    while b!=0:
+        a, b = b, a % b
+    return a
+
+def LCM(a, b):
+    """
+    Returns the lowest common multiple of a and b
+    """
+    
+    return (a*b)/HCF(a, b)
 
 app = Flask(__name__)
 app.secret_key = 'secret'
