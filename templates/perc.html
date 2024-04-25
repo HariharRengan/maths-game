@@ -107,7 +107,7 @@
 }
 
       function checkAnswer() {
-        var userAnswer = parseInt(document.getElementById("numerator").value.trim());;
+        var userAnswer = document.getElementById("numerator").value.trim();
         var expectedAnswer = document.getElementById("expectedAnswer").textContent;
         console.log(expectedAnswer, typeof(expectedAnswer), userAnswer, typeof(userAnswer))
 
